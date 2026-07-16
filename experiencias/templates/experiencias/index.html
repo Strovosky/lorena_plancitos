@@ -1,0 +1,387 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorena Vásquez — Dare to begin. Together.</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Sweetform alternative (Inter + Playfair Display for demo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'experiencias/style.css' %}">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / NAVIGATION                          -->
+    <!-- ============================================ -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <a href="#">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                </a>
+            </div>
+            
+            <!-- Mobile Hamburger -->
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <ul class="nav__menu" id="navMenu">
+                <li><a href="#experiences" class="nav__link">Experiences</a></li>
+                <li><a href="#community" class="nav__link">Community</a></li>
+                <li><a href="#lore" class="nav__link">The Lore</a></li>
+                <li><a href="#about" class="nav__link">About</a></li>
+                <li><a href="#contact" class="nav__link nav__link--cta">Join the Adventure</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION                                -->
+    <!-- ============================================ -->
+    <section class="hero" id="hero">
+        <div class="hero__container container">
+            <div class="hero__content">
+                <span class="hero__badge">✨ New Experience Launching Soon</span>
+                <h1 class="hero__title animate-text">
+                    Dare to <span class="highlight">begin.</span><br>
+                    <span class="hero__subtitle">Together.</span>
+                </h1>
+                <p class="hero__description">
+                    Transform your "first times" into shared adventures. 
+                    Join a community of creative souls embracing the unknown.
+                </p>
+                <div class="hero__actions">
+                    <a href="#experiences" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-compass"></i> Explore Experiences
+                    </a>
+                    <a href="#community" class="btn btn--secondary">
+                        <i class="fas fa-users"></i> Join the Community
+                    </a>
+                </div>
+                <div class="hero__stats">
+                    <div class="stat">
+                        <span class="stat__number">2.4K+</span>
+                        <span class="stat__label">Adventurers</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">47</span>
+                        <span class="stat__label">Experiences</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">12</span>
+                        <span class="stat__label">Countries</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Hero Image - Hidden on mobile, visible on tablet+ -->
+            <div class="hero__image desktop-only">
+                <div class="hero__image-placeholder">
+                    <i class="fas fa-mountain-sun"></i>
+                    <!-- In production: <img src="hero-image.jpg" alt="Lorena facilitating a workshop"> -->
+                </div>
+                <div class="hero__floating-badge badge-1">
+                    <i class="fas fa-star"></i> First Timer's Club
+                </div>
+                <div class="hero__floating-badge badge-2">
+                    <i class="fas fa-heart"></i> 98% Recommend
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- INTERACTIVE QUIZ SECTION (Mobile-First)      -->
+    <!-- ============================================ -->
+    <section class="quiz" id="quiz">
+        <div class="container">
+            <div class="quiz__content">
+                <h2 class="section-title">What's Your First Adventure?</h2>
+                <p class="section-subtitle">Take our 30-second quiz and discover your next "first time."</p>
+                <form class="quiz__form" id="quizForm">
+                    <div class="quiz__question">
+                        <label class="quiz__label">I feel most alive when...</label>
+                        <div class="quiz__options">
+                            <label class="quiz__option">
+                                <input type="radio" name="q1" value="creative">
+                                <span class="quiz__option-text"><i class="fas fa-paint-brush"></i> Creating something new</span>
+                            </label>
+                            <label class="quiz__option">
+                                <input type="radio" name="q1" value="social">
+                                <span class="quiz__option-text"><i class="fas fa-handshake"></i> Connecting with others</span>
+                            </label>
+                            <label class="quiz__option">
+                                <input type="radio" name="q1" value="explore">
+                                <span class="quiz__option-text"><i class="fas fa-map"></i> Exploring the unknown</span>
+                            </label>
+                            <label class="quiz__option">
+                                <input type="radio" name="q1" value="grow">
+                                <span class="quiz__option-text"><i class="fas fa-seedling"></i> Pushing my limits</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full quiz__submit">
+                        <i class="fas fa-wand-sparkles"></i> Find My Adventure
+                    </button>
+                    <div class="quiz__result" id="quizResult" style="display: none;">
+                        <p><i class="fas fa-check-circle"></i> You're a <strong>Creative Explorer!</strong> Check your email for a personalized recommendation.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FEATURED EXPERIENCES                         -->
+    <!-- ============================================ -->
+    <section class="experiences" id="experiences">
+        <div class="container">
+            <div class="experiences__header">
+                <span class="section-tag">✨ Upcoming Adventures</span>
+                <h2 class="section-title">Choose Your Experience</h2>
+                <p class="section-subtitle">Each journey is designed to transform a "first time" into a lifelong memory.</p>
+            </div>
+
+            <div class="experiences__grid">
+                <!-- Experience Card 1 -->
+                <article class="experience-card">
+                    <div class="experience-card__image">
+                        <i class="fas fa-mountain"></i>
+                        <!-- In production: <img src="exp1.jpg" alt="Creativity Bootcamp"> -->
+                        <span class="experience-card__badge">🔥 New</span>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Creativity Bootcamp</h3>
+                        <p class="experience-card__description">
+                            Unlock your creative potential through guided exercises and group collaboration.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> Aug 15-17</span>
+                            <span><i class="far fa-clock"></i> 3 days</span>
+                            <span><i class="fas fa-users"></i> 12 spots left</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$297</span>
+                            <a href="#" class="btn btn--secondary btn--small">Learn More</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Experience Card 2 -->
+                <article class="experience-card">
+                    <div class="experience-card__image">
+                        <i class="fas fa-compass"></i>
+                        <span class="experience-card__badge">🌍 Bestseller</span>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Solo Travel 101</h3>
+                        <p class="experience-card__description">
+                            Conquer your fear of solo travel with a supportive group and expert guidance.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> Sep 5-12</span>
+                            <span><i class="far fa-clock"></i> 7 days</span>
+                            <span><i class="fas fa-users"></i> 8 spots left</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$1,197</span>
+                            <a href="#" class="btn btn--secondary btn--small">Learn More</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Experience Card 3 - Hidden on mobile, visible on tablet+ -->
+                <article class="experience-card tablet-only">
+                    <div class="experience-card__image">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span class="experience-card__badge">💫 Just Added</span>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Courage Workshop</h3>
+                        <p class="experience-card__description">
+                            Face your fears and build the courage to pursue your boldest dreams.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> Oct 2-3</span>
+                            <span><i class="far fa-clock"></i> 2 days</span>
+                            <span><i class="fas fa-users"></i> 15 spots left</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$197</span>
+                            <a href="#" class="btn btn--secondary btn--small">Learn More</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="experiences__cta">
+                <a href="#" class="btn btn--primary">View All Experiences <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- COMMUNITY PULSE                             -->
+    <!-- ============================================ -->
+    <section class="community" id="community">
+        <div class="container">
+            <div class="community__header">
+                <span class="section-tag">🔥 The Campfire</span>
+                <h2 class="section-title">What Our Adventurers Are Saying</h2>
+            </div>
+
+            <!-- Testimonial Slider - Mobile has 1, Tablet has 2, Desktop has 3 -->
+            <!-- ==================================================== -->
+            <!-- SLIDER: To enable a full testimonial slider,         -->
+            <!-- uncomment the JavaScript at the bottom of the file,  -->
+            <!-- and replace these static testimonials with a         -->
+            <!-- dynamic slider component.                            -->
+            <!-- ==================================================== -->
+            <div class="community__testimonials" id="testimonialSlider">
+                <div class="testimonial">
+                    <div class="testimonial__stars">★★★★★</div>
+                    <p class="testimonial__text">
+                        "I never thought I could travel alone. Lorena's community gave me the courage and support I needed. Now I've visited 4 countries on my own!"
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__avatar">📷</div>
+                        <div>
+                            <span class="testimonial__name">María C.</span>
+                            <span class="testimonial__role">First-time solo traveler</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial tablet-only">
+                    <div class="testimonial__stars">★★★★★</div>
+                    <p class="testimonial__text">
+                        "The Creativity Bootcamp was life-changing. I finally started that project I'd been putting off for years. Thank you, Lorena!"
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__avatar">📷</div>
+                        <div>
+                            <span class="testimonial__name">Carlos R.</span>
+                            <span class="testimonial__role">Creative entrepreneur</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial desktop-only">
+                    <div class="testimonial__stars">★★★★★</div>
+                    <p class="testimonial__text">
+                        "Lorena's workshop helped me quit my corporate job and start my own business. This community is pure magic."
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__avatar">📷</div>
+                        <div>
+                            <span class="testimonial__name">Laura M.</span>
+                            <span class="testimonial__role">Business owner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community CTA -->
+            <div class="community__cta">
+                <a href="#" class="btn btn--secondary btn--outline">
+                    <i class="fas fa-users"></i> Join 2.4K+ Adventurers
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- THE LORE (Blog/Podcast Preview)             -->
+    <!-- ============================================ -->
+    <section class="lore" id="lore">
+        <div class="container">
+            <div class="lore__header">
+                <span class="section-tag">📖 The Guide's Journal</span>
+                <h2 class="section-title">From the Lore</h2>
+            </div>
+
+            <div class="lore__grid">
+                <article class="lore-card">
+                    <div class="lore-card__image">
+                        <i class="fas fa-podcast"></i>
+                        <span class="lore-card__type">Podcast</span>
+                    </div>
+                    <div class="lore-card__body">
+                        <h3 class="lore-card__title">Episode 47: The Courage to Start</h3>
+                        <p class="lore-card__excerpt">Why the hardest step is always the first one—and how to take it anyway.</p>
+                        <a href="#" class="lore-card__link">Listen Now →</a>
+                    </div>
+                </article>
+
+                <article class="lore-card tablet-only">
+                    <div class="lore-card__image">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span class="lore-card__type">Blog</span>
+                    </div>
+                    <div class="lore-card__body">
+                        <h3 class="lore-card__title">Why "First Times" Are Better Together</h3>
+                        <p class="lore-card__excerpt">The science behind community and why shared experiences transform us.</p>
+                        <a href="#" class="lore-card__link">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="lore-card desktop-only">
+                    <div class="lore-card__image">
+                        <i class="fas fa-video"></i>
+                        <span class="lore-card__type">Video</span>
+                    </div>
+                    <div class="lore-card__body">
+                        <h3 class="lore-card__title">My First Time Teaching a Workshop</h3>
+                        <p class="lore-card__excerpt">A behind-the-scenes look at the fear, the joy, and the lessons learned.</p>
+                        <a href="#" class="lore-card__link">Watch Now →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- NEWSLETTER SIGNUP                           -->
+    <!-- ============================================ -->
+    <section class="newsletter" id="contact">
+        <div class="container">
+            <div class="newsletter__content">
+                <h2 class="section-title">Join the Adventure</h2>
+                <p class="section-subtitle">
+                    Get first access to new experiences, exclusive content, and community stories.
+                    No spam. Just magic.
+                </p>
+                <form class="newsletter__form" id="newsletterForm">
+                    <div class="newsletter__field">
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn--primary btn--pulse">
+                            <i class="fas fa-paper-plane"></i> Subscribe
+                        </button>
+                    </div>
+                    <p class="newsletter__disclaimer">Join 2.4K+ adventurers. Unsubscribe anytime.</p>
+                    <div class="newsletter__success" id="newsletterSuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> You're in! Check your email for a welcome gift.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                      -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                    <p class="footer__tagline">Dare to begin. Together.</p>
