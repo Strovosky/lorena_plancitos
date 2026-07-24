@@ -77,10 +77,15 @@ WSGI_APPLICATION = 'lore_plancitos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('LORE_DB_NAME'),
+        'USER': os.environ.get('LORE_DB_USER'),
+        'PASSWORD': os.environ.get('LORE_DB_PASSWORD'),
+        'HOST': os.environ.get('LORE_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('LORE_DB_PORT', '5432')
     }
 }
+
 
 
 # Password validation
@@ -105,9 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# Because my main audience is colombian
+LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
