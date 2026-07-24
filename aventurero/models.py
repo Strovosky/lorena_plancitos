@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.db.models import EmailField, CharField, TextField, ImageField, IntegerField, DateTimeField, BooleanField
+from django.db.models import EmailField, CharField, TextField, ImageField, DateTimeField, BooleanField
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import RegexValidator
 from PIL import Image
 
 # Create your models here.
@@ -21,10 +22,6 @@ class MiManejadorUsuario(BaseUserManager):
             raise ValueError(_('Debe proveer un primer nombre.'))
         if not a:
             raise ValueError(_('Debe proveer un apellildo.'))
-        
-        if t < 1111111111 or t > 9999999999:
-            raise ValueError(_('El teléfono debe tener 10 digitos, ni más ni menos.'))
-
 
     def create_user(
             self,
@@ -32,7 +29,7 @@ class MiManejadorUsuario(BaseUserManager):
             usuario: str,
             nombre: str,
             apellido: str,
-            telefono: int,
+            telefono: str,
             password,
             **otros_campos
             ):
@@ -46,9 +43,9 @@ class MiManejadorUsuario(BaseUserManager):
 
         correo = self.normalize_email(correo)
         aventurero = self.model(correo=correo,
-                             usuario=usuario.title(),
-                             nombre=nombre.title(),
-                             apellido=apellido.title(),
+                             usuario=usuario.lower(),
+                             nombre=nombre.lower(),
+                             apellido=apellido.lower(),
                              telefono=telefono,
                              **otros_campos
                              )
@@ -78,7 +75,7 @@ class Aventurero(AbstractBaseUser, PermissionsMixin):
 
     nombre = CharField(_('nombre'), max_length=100)
     apellido = CharField(_('apellido'), max_length=100)
-    telefono = IntegerField(_('teléfono'))
+    telefono = CharField(_('teléfono'), max_length=15, validators=[RegexValidator(r'^\d{10}$', 'El teléfono debe tener un máximo de 10 digitos.')])
     bio = TextField(max_length=500, null=True, blank=True, help_text="Cuénta un poco de ti.")
     motto = CharField(max_length=200, help_text="La frase que te define.", null=True, blank=True)
     profesion = CharField(_('profesión'), max_length=100, null=True, blank=True)
