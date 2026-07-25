@@ -12,7 +12,7 @@ venv/
 *.sqlite3
 db.sqlite3
 /staticfiles/
-/media/
+/media/imagenes_perfil/
 
 # IDE
 .vscode/
