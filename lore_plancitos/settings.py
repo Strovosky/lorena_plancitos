@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,13 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
+# Inicializar environ
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG") == "True"
+DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")]
+ALLOWED_HOSTS = [host.strip() for host in env("ALLOWED_HOSTS").split(",")]
 
 
 
@@ -78,11 +83,11 @@ WSGI_APPLICATION = 'lore_plancitos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('LORE_DB_NAME'),
-        'USER': os.environ.get('LORE_DB_USER'),
-        'PASSWORD': os.environ.get('LORE_DB_PASSWORD'),
-        'HOST': os.environ.get('LORE_DB_HOST', 'localhost'),
-        'PORT': os.environ.get('LORE_DB_PORT', '5432')
+        'NAME': env('LORE_DB_NAME'),
+        'USER': env('LORE_DB_USER'),
+        'PASSWORD': env('LORE_DB_PASSWORD'),
+        'HOST': env('LORE_DB_HOST', default='localhost'),
+        'PORT': env('LORE_DB_PORT', default='5432')
     }
 }
 
