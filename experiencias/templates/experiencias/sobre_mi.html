@@ -1,0 +1,770 @@
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Lorena — Lorena Vásquez</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'experiencias/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'experiencias/lore_favicon.ico' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'experiencias/lore_favicon.svg' %}">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / NAVIGATION                          -->
+    <!-- ============================================ -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <a href="{% url 'experiencias:home' %}">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                </a>
+            </div>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav__menu" id="navMenu">
+                <li><a href="{% url 'experiencias:home' %}#experiences" class="nav__link">Experiencias</a></li>
+                <li><a href="{% url 'experiencias:home' %}#community" class="nav__link">Comunidad</a></li>
+                <li><a href="{% url 'experiencias:home' %}#lore" class="nav__link">The Lore</a></li>
+                <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link nav__link--active">Sobre Mí</a></li>
+                <li><a href="{% url 'experiencias:home' %}#contact" class="nav__link nav__link--cta">Únete a la Aventura</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION                                -->
+    <!-- ============================================ -->
+    <section class="about-hero" id="about-hero">
+        <div class="about-hero__container container">
+            <div class="about-hero__content">
+                <span class="about-hero__badge">✦ Sobre mí</span>
+                <h1 class="about-hero__title">
+                    Soy Lorena. Y creo que las <span class="highlight">primeras veces</span> están hechas para compartirse.
+                </h1>
+                <p class="about-hero__subtitle">
+                    De creativa nómada a guía de aventureros. Esta es mi historia.
+                </p>
+                <a href="#filosofia" class="btn btn--primary btn--pulse">
+                    <i class="fas fa-compass"></i> Conoce mi filosofía
+                </a>
+            </div>
+            <div class="about-hero__image desktop-only">
+                {% thumbnail "lorena-hero.webp" "800x800" crop="center" format="WEBP" quality=85 as hero %}
+                    <img src="{{hero.url}}" 
+                         alt="Lorena Vásquez sonriendo cálidamente" 
+                         width="{{hero.width}}" 
+                         height="{{hero.height}}"
+                         loading="eager">
+                {% endthumbnail %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- MI HISTORIA                                 -->
+    <!-- ============================================ -->
+    <section class="about-story" id="historia">
+        <div class="container">
+            <div class="about-story__grid">
+                <div class="about-story__image">
+                    {% thumbnail "lorena-viaje.webp" "600x800" crop="center" format="WEBP" quality=85 as story %}
+                       <img src="{{ story.url }}" 
+                             alt="Lorena Vásquez en un viaje de descubrimiento"
+                             width="{{story.width}}" 
+                             height="{{story.height}}"
+                             loading="lazy">
+                    {% endthumbnail %}
+                </div>
+                <div class="about-story__content">
+                    <span class="section-tag">📖 Mi historia</span>
+                    <h2 class="section-title">Cómo un "no sé" se convirtió en un "por qué no"</h2>
+                    <div class="about-story__text">
+                        <p>
+                            Durante años, fui una experta en decir "no". No a los cambios, no a los riesgos, no a las oportunidades que me daban miedo. 
+                            Hasta que un día entendí algo fundamental: <strong>el miedo no desaparece, solo se transforma</strong>.
+                        </p>
+                        <p>
+                            Mi primer "primer paso" fue viajar sola. No sabía cómo hacerlo, no sabía si podría, pero sabía que tenía que intentarlo. 
+                            Ese viaje me enseñó que el miedo es solo la emoción que precede al crecimiento.
+                        </p>
+                        <p>
+                            Desde entonces, he hecho del "primer paso" mi misión. No porque sea fácil, sino porque <strong>cada primera vez es una puerta 
+                            que se abre a una versión más valiente de nosotros mismos</strong>.
+                        </p>
+                    </div>
+                    <blockquote class="about-story__quote">
+                        "El primer paso siempre da miedo. Pero el segundo, el tercero... se vuelven más ligeros cuando caminas con otros."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FILOSOFÍA / PILARES                         -->
+    <!-- ============================================ -->
+    <section class="about-philosophy" id="filosofia">
+        <div class="container">
+            <div class="about-philosophy__header">
+                <span class="section-tag">🧭 Mi filosofía</span>
+                <h2 class="section-title">Los pilares que guían cada experiencia</h2>
+                <p class="section-subtitle">
+                    Cada aventura que creamos está construida sobre estos tres valores fundamentales.
+                </p>
+            </div>
+
+            <div class="about-philosophy__grid">
+                <div class="philosophy-card philosophy-card--orange">
+                    <div class="philosophy-card__icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3 class="philosophy-card__title">Coraje</h3>
+                    <p class="philosophy-card__text">
+                        El coraje no es la ausencia de miedo, sino la decisión de actuar a pesar de él. 
+                        Cada experiencia está diseñada para que des un paso más allá de tu zona de confort, 
+                        sabiendo que no estás solo.
+                    </p>
+                </div>
+
+                <div class="philosophy-card philosophy-card--yellow">
+                    <div class="philosophy-card__icon">
+                        <i class="fas fa-compass"></i>
+                    </div>
+                    <h3 class="philosophy-card__title">Curiosidad</h3>
+                    <p class="philosophy-card__text">
+                        La curiosidad es la brújula que nos guía hacia nuevas posibilidades. 
+                        Creemos que la vida se expande cuando nos atrevemos a preguntar "¿qué pasaría si...?" 
+                        y a explorar las respuestas juntos.
+                    </p>
+                </div>
+
+                <div class="philosophy-card philosophy-card--green">
+                    <div class="philosophy-card__icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="philosophy-card__title">Conexión</h3>
+                    <p class="philosophy-card__text">
+                        Las experiencias compartidas nos transforman de maneras que las solitarias no pueden. 
+                        Por eso cada experiencia está diseñada para conectar, para construir comunidad, 
+                        para recordarnos que juntos somos más fuertes.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-philosophy__manifesto">
+                <h3>Nuestro manifiesto</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Creemos que cada persona tiene una "primera vez" esperando ser vivida.</li>
+                    <li><i class="fas fa-check-circle"></i> Sabemos que el miedo es parte del proceso, no el final del camino.</li>
+                    <li><i class="fas fa-check-circle"></i> Nos comprometemos a crear espacios seguros para crecer juntos.</li>
+                    <li><i class="fas fa-check-circle"></i> Celebramos cada paso, por pequeño que sea.</li>
+                    <li><i class="fas fa-check-circle"></i> Recordamos siempre que la aventura más importante es la que compartimos.</li>
+                </ul>
+                <p class="manifesto__tagline">
+                    <strong>"Dare to begin. Together."</strong> — No es solo un eslogan, es una promesa.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- LÍNEA DE TIEMPO INTERACTIVA                 -->
+    <!-- ============================================ -->
+    <section class="about-timeline" id="timeline">
+        <div class="container">
+            <div class="about-timeline__header">
+                <span class="section-tag">⏳ Mi viaje</span>
+                <h2 class="section-title">El camino que me trajo hasta aquí</h2>
+                <p class="section-subtitle">
+                    Cada paso me enseñó algo valioso. Esta es mi línea de tiempo.
+                </p>
+            </div>
+
+            <div class="timeline" id="timelineContainer">
+                <div class="timeline__item">
+                    <div class="timeline__dot"></div>
+                    <div class="timeline__content">
+                        <span class="timeline__year">2015</span>
+                        <h3 class="timeline__title">El primer paso</h3>
+                        <p class="timeline__description">
+                            Mi primer viaje sola a Europa. El miedo era enorme, pero la curiosidad era más grande. 
+                            Ese viaje cambió mi vida para siempre.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline__item">
+                    <div class="timeline__dot"></div>
+                    <div class="timeline__content">
+                        <span class="timeline__year">2017</span>
+                        <h3 class="timeline__title">El llamado</h3>
+                        <p class="timeline__description">
+                            Empecé a compartir mis historias en redes sociales. Descubrí que mi experiencia resonaba 
+                            con muchas personas que también querían dar su "primer paso" pero no sabían cómo.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline__item">
+                    <div class="timeline__dot"></div>
+                    <div class="timeline__content">
+                        <span class="timeline__year">2019</span>
+                        <h3 class="timeline__title">La primera comunidad</h3>
+                        <p class="timeline__description">
+                            Organicé mi primer taller presencial. 15 personas se atrevieron a dar su "primer paso" juntas. 
+                            Fue el momento en que supe que esto era lo que debía hacer.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline__item">
+                    <div class="timeline__dot"></div>
+                    <div class="timeline__content">
+                        <span class="timeline__year">2021</span>
+                        <h3 class="timeline__title">El salto</h3>
+                        <p class="timeline__description">
+                            Dejé mi trabajo corporativo para dedicarme por completo a guiar a otros en sus "primeras veces". 
+                            El miedo no desapareció, pero la certeza de mi propósito era más fuerte.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline__item">
+                    <div class="timeline__dot"></div>
+                    <div class="timeline__content">
+                        <span class="timeline__year">2024</span>
+                        <h3 class="timeline__title">La comunidad crece</h3>
+                        <p class="timeline__description">
+                            Hoy somos más de 2,400 aventureros en todo el mundo. Cada historia, cada "primera vez", 
+                            es un recordatorio de que este camino vale la pena.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline__item">
+                    <div class="timeline__dot timeline__dot--future"></div>
+                    <div class="timeline__content">
+                        <span class="timeline__year">2026</span>
+                        <h3 class="timeline__title">El futuro</h3>
+                        <p class="timeline__description">
+                            Este es solo el comienzo. Estamos construyendo un espacio donde cada "primera vez" 
+                            sea celebrada, donde el miedo se convierta en curiosidad, y donde nadie tenga que caminar solo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline__controls">
+                <button class="btn btn--secondary btn--small timeline__btn" id="timelinePrev">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <span class="timeline__counter" id="timelineCounter">1 / 6</span>
+                <button class="btn btn--secondary btn--small timeline__btn" id="timelineNext">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+   <!-- ============================================ -->
+    <!-- IMPACTO: RESULTADOS Y TESTIMONIOS           -->
+    <!-- ============================================ -->
+    <section class="about-impact" id="impacto">
+        <div class="container">
+            <div class="about-impact__header">
+                <span class="section-tag">💫 El impacto</span>
+                <h2 class="section-title">Historias de quienes se atrevieron a comenzar</h2>
+            </div>
+
+            <div class="about-impact__stats">
+                <div class="stat stat--impact">
+                    <span class="stat__number">2,400+</span>
+                    <span class="stat__label">Aventureros</span>
+                </div>
+                <div class="stat stat--impact">
+                    <span class="stat__number">47</span>
+                    <span class="stat__label">Experiencias</span>
+                </div>
+                <div class="stat stat--impact">
+                    <span class="stat__number">12</span>
+                    <span class="stat__label">Países</span>
+                </div>
+                <div class="stat stat--impact">
+                    <span class="stat__number">98%</span>
+                    <span class="stat__label">Recomendación</span>
+                </div>
+            </div>
+
+            <div class="about-impact__testimonials">
+                <div class="testimonial-card testimonial-card--impact">
+                    <div class="testimonial-card__stars">★★★★★</div>
+                    <p class="testimonial-card__text">
+                        "Lorena me ayudó a hacer mi primer viaje sola. No solo me dio herramientas, 
+                        me dio la confianza que necesitaba para dar ese paso. Hoy he visitado 4 países sola."
+                    </p>
+                    <div class="testimonial-card__author">
+                        {% thumbnail "experiencias/imagenes/maria-avatar.webp" "60x60" crop="center" format="WEBP" quality=85 as maria %}
+                            <img src="{{ maria.url }}" 
+                                 alt="María C." 
+                                 width="" 
+                                 height=""
+                                 class="testimonial-card__avatar"
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <div>
+                            <span class="testimonial-card__name">María C.</span>
+                            <span class="testimonial-card__role">Viajera primeriza</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card testimonial-card--impact tablet-only">
+                    <div class="testimonial-card__stars">★★★★★</div>
+                    <p class="testimonial-card__text">
+                        "El taller de creatividad de Lorena fue un antes y un después en mi vida. 
+                        Finalmente empecé ese proyecto que había estado postergando por años."
+                    </p>
+                    <div class="testimonial-card__author">
+                        {% thumbnail "experiencias/imagenes/carlos-avatar.webp" "60x60" crop="center" format="WEBP" quality=85 as carlos %}
+                            <img src="{{ carlos.url }}" 
+                                 alt="Carlos R." 
+                                 width="" 
+                                 height=""
+                                 class="testimonial-card__avatar"
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <div>
+                            <span class="testimonial-card__name">Carlos R.</span>
+                            <span class="testimonial-card__role">Emprendedor creativo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card testimonial-card--impact desktop-only">
+                    <div class="testimonial-card__stars">★★★★★</div>
+                    <p class="testimonial-card__text">
+                        "Lorena me ayudó a renunciar a mi trabajo corporativo y empezar mi propio negocio. 
+                        Esta comunidad es pura magia."
+                    </p>
+                    <div class="testimonial-card__author">
+                        {% thumbnail "experiencias/imagenes/laura-avatar.webp" "60x60" crop="center" format="WEBP" quality=85 as laura %}
+                            <img src="{{ laura.url }}" 
+                                 alt="Laura M." 
+                                 width="" 
+                                 height=""
+                                 class="testimonial-card__avatar"
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <div>
+                            <span class="testimonial-card__name">Laura M.</span>
+                            <span class="testimonial-card__role">Emprendedora</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-impact__gallery">
+                <div class="gallery-grid">
+                    {% thumbnail "galeria_mini/gal_bolos.webp" "300x300" crop="center" format="WEBP" quality=85 as g1 %}
+                        <img src="{{ g1.url }}" alt="Experiencia 1" class="gallery-item" loading="lazy">
+                    {% endthumbnail %}
+                    {% thumbnail "galeria_mini/gal_caminata.webp" "300x300" crop="center" format="WEBP" quality=85 as g2 %}
+                        <img src="{{ g2.url }}" alt="Experiencia 2" class="gallery-item" loading="lazy">
+                    {% endthumbnail %}
+                    {% thumbnail "galeria_mini/gal_juegos_mesa.webp" "300x300" crop="center" format="WEBP" quality=85 as g3 %}
+                        <img src="{{ g3.url }}" alt="Experiencia 3" class="gallery-item" loading="lazy">
+                    {% endthumbnail %}
+                    {% thumbnail "galeria_mini/gal_tejo.webp" "300x300" crop="center" format="WEBP" quality=85 as g4 %}
+                        <img src="{{ g4.url }}" alt="Experiencia 4" class="gallery-item" loading="lazy">
+                    {% endthumbnail %}
+                    {% thumbnail "galeria_mini/gal_tinder.webp" "300x300" crop="center" format="WEBP" quality=85 as g5 %}
+                        <img src="{{ g5.url }}" alt="Experiencia 5" class="gallery-item" loading="lazy">
+                    {% endthumbnail %}
+                </div>
+            </div>
+
+            <div class="about-impact__quote">
+                <blockquote>
+                    "Lo que empezó como un 'no sé si pueda' se convirtió en un <strong>'mira lo que logramos juntos'</strong>."
+                </blockquote>
+                <cite>— Laura, participante</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- QUIZ RÁPIDO                                -->
+    <!-- ============================================ -->
+    <section class="about-quiz" id="quiz">
+        <div class="container">
+            <div class="about-quiz__content">
+                <span class="section-tag">🧠 ¿Y tú?</span>
+                <h2 class="section-title">¿Cuál es tu estilo de aventurero?</h2>
+                <p class="section-subtitle">
+                    Responde estas 3 preguntas y descubre qué tipo de "primera vez" te espera.
+                </p>
+
+                <form class="about-quiz__form" id="aboutQuizForm">
+                    <div class="quiz-question">
+                        <label class="quiz-question__label">1. Cuando piensas en una "primera vez", ¿qué sientes primero?</label>
+                        <div class="quiz-question__options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="curiosidad">
+                                <span class="quiz-option__text">Curiosidad y emoción</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="miedo">
+                                <span class="quiz-option__text">Miedo, pero también emoción</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="duda">
+                                <span class="quiz-option__text">Duda y necesidad de validación</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <label class="quiz-question__label">2. ¿Qué tipo de experiencia te llama más la atención?</label>
+                        <div class="quiz-question__options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="creatividad">
+                                <span class="quiz-option__text">Creatividad y arte</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="aventura">
+                                <span class="quiz-option__text">Aventura y naturaleza</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="crecimiento">
+                                <span class="quiz-option__text">Crecimiento personal y conexión</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <label class="quiz-question__label">3. ¿Cómo te gustaría sentirte después de una experiencia?</label>
+                        <div class="quiz-question__options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="inspirado">
+                                <span class="quiz-option__text">Inspirado y lleno de ideas</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="conectado">
+                                <span class="quiz-option__text">Conectado con otros y conmigo mismo</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="empoderado">
+                                <span class="quiz-option__text">Empoderado y listo para más</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full quiz-submit">
+                        <i class="fas fa-wand-sparkles"></i> Descubrir mi estilo
+                    </button>
+
+                    <div class="quiz-result" id="aboutQuizResult" style="display: none;">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>¡Eres un/a <span id="quizResultType">Explorador Creativo</span>!</strong></p>
+                        <p id="quizResultDescription">
+                            Te mueve la curiosidad y la creatividad. Tu próxima "primera vez" debería ser un taller creativo o una experiencia artística.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PROPÓSITO Y FUTURO                          -->
+    <!-- ============================================ -->
+    <section class="about-purpose" id="proposito">
+        <div class="container">
+            <div class="about-purpose__content">
+                <span class="section-tag">🚀 Mi propósito</span>
+                <h2 class="section-title">Esto es solo el comienzo</h2>
+                <p class="about-purpose__text">
+                    Estamos construyendo un espacio donde cada primera vez sea celebrada, 
+                    donde el miedo se convierta en curiosidad, y donde nadie tenga que caminar solo.
+                </p>
+                <p class="about-purpose__text">
+                    En los próximos meses, llegaremos a más ciudades, crearemos experiencias virtuales 
+                    y seguiremos conectando a aventureros de todo el mundo.
+                </p>
+                <div class="about-purpose__invite">
+                    <p class="invite-text">
+                        <i class="fas fa-quote-left"></i>
+                        ¿Y tú? ¿Cuál es tu próxima primera vez? 
+                        <strong>Me encantaría acompañarte en ese paso.</strong>
+                        <i class="fas fa-quote-right"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CALL TO ACTION                              -->
+    <!-- ============================================ -->
+    <section class="about-cta" id="cta">
+        <div class="container">
+            <div class="about-cta__content">
+                <h2 class="section-title">¿Listo para tu próxima primera vez?</h2>
+                <div class="about-cta__buttons">
+                    <a href="{% url 'experiencias:home' %}#experiences" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-compass"></i> Explora las experiencias
+                    </a>
+                    <a href="{% url 'experiencias:home' %}#community" class="btn btn--secondary btn--outline">
+                        <i class="fas fa-users"></i> Únete a la comunidad
+                    </a>
+                </div>
+                <div class="about-cta__newsletter">
+                    <p class="about-cta__newsletter-text">
+                        <i class="fas fa-gift"></i> Suscríbete y recibe un 10% de descuento en tu primera experiencia.
+                    </p>
+                    <form class="about-cta__form" id="aboutNewsletterForm">
+                        <input type="email" placeholder="Tu mejor email" required>
+                        <button type="submit" class="btn btn--primary btn--small">
+                            <i class="fas fa-paper-plane"></i> Suscribirme
+                        </button>
+                    </form>
+                </div>
+                <div class="about-cta__social">
+                    <span>Sígueme en mis aventuras diarias:</span>
+                    <div class="social-links">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                      -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                    <p class="footer__tagline">Dare to begin. Together.</p>
+                    <div class="footer__social">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="{% url 'experiencias:home' %}#experiences">Experiencias</a></li>
+                        <li><a href="{% url 'experiencias:home' %}#community">Comunidad</a></li>
+                        <li><a href="{% url 'experiencias:home' %}#lore">The Lore</a></li>
+                        <li><a href="{% url 'experiencias:sobre_mi' %}">Sobre mí</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos</a></li>
+                    </ul>
+                </div>
+                <div class="footer__badge">
+                    <div class="footer__community-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Orgullosa miembro del <strong>First Timer's Club</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Lorena Vásquez. Todos los derechos reservados. Hecho con ❤️ y valentía.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT                                  -->
+    <!-- ============================================ -->
+    <script>
+        // ==========================================
+        // MOBILE MENU TOGGLE
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ==========================================
+        // TIMELINE INTERACTIVE (Mobile-friendly)
+        // ==========================================
+        (function() {
+            const container = document.getElementById('timelineContainer');
+            const prevBtn = document.getElementById('timelinePrev');
+            const nextBtn = document.getElementById('timelineNext');
+            const counter = document.getElementById('timelineCounter');
+
+            if (!container || !prevBtn || !nextBtn || !counter) return;
+
+            const items = container.querySelectorAll('.timeline__item');
+            const totalItems = items.length;
+            let currentIndex = 0;
+
+            function updateTimeline(index) {
+                items.forEach((item, i) => {
+                    if (i === index) {
+                        item.style.display = 'block';
+                        item.style.opacity = '1';
+                    } else {
+                        item.style.display = 'none';
+                        item.style.opacity = '0';
+                    }
+                });
+                counter.textContent = `${index + 1} / ${totalItems}`;
+                currentIndex = index;
+            }
+
+            prevBtn.addEventListener('click', function() {
+                const newIndex = currentIndex > 0 ? currentIndex - 1 : totalItems - 1;
+                updateTimeline(newIndex);
+            });
+
+            nextBtn.addEventListener('click', function() {
+                const newIndex = currentIndex < totalItems - 1 ? currentIndex + 1 : 0;
+                updateTimeline(newIndex);
+            });
+
+            updateTimeline(0);
+
+            function handleResize() {
+                const isDesktop = window.innerWidth >= 1024;
+                if (isDesktop) {
+                    items.forEach(item => {
+                        item.style.display = 'block';
+                        item.style.opacity = '1';
+                    });
+                    counter.textContent = `${totalItems} / ${totalItems}`;
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = 'inline-flex';
+                    nextBtn.style.display = 'inline-flex';
+                    updateTimeline(currentIndex);
+                }
+            }
+
+            window.addEventListener('resize', handleResize);
+            handleResize();
+        })();
+
+        // ==========================================
+        // QUIZ RÁPIDO INTERACTIVO
+        // ==========================================
+        (function() {
+            const form = document.getElementById('aboutQuizForm');
+            const resultDiv = document.getElementById('aboutQuizResult');
+            const resultType = document.getElementById('quizResultType');
+            const resultDesc = document.getElementById('quizResultDescription');
+
+            if (!form || !resultDiv || !resultType || !resultDesc) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const q1 = form.querySelector('input[name="q1"]:checked');
+                const q2 = form.querySelector('input[name="q2"]:checked');
+                const q3 = form.querySelector('input[name="q3"]:checked');
+
+                if (!q1 || !q2 || !q3) {
+                    alert('Por favor, responde todas las preguntas.');
+                    return;
+                }
+
+                let tipo = '';
+                let descripcion = '';
+
+                const values = [q1.value, q2.value, q3.value];
+
+                if (values.includes('creatividad') && values.includes('inspirado')) {
+                    tipo = 'Explorador Creativo 🎨';
+                    descripcion = 'Te mueve la curiosidad y la creatividad. Tu próxima "primera vez" debería ser un taller creativo, una experiencia artística o un retiro de expresión.';
+                } else if (values.includes('aventura') && values.includes('curiosidad')) {
+                    tipo = 'Aventurero Intrépido 🏔️';
+                    descripcion = 'Te llama la naturaleza y la emoción. Tu próxima "primera vez" debería ser un viaje de exploración, un retiro en la montaña o una experiencia al aire libre.';
+                } else if (values.includes('crecimiento') && values.includes('conectado')) {
+                    tipo = 'Conector Empático 🤝';
+                    descripcion = 'Valoras las conexiones profundas y el crecimiento personal. Tu próxima "primera vez" debería ser un taller de desarrollo personal, un círculo de mujeres o una experiencia de conexión comunitaria.';
+                } else if (values.includes('duda') || values.includes('miedo')) {
+                    tipo = 'Buscador Valiente 💪';
+                    descripcion = 'Aunque sientes dudas, estás listo para dar el paso. Tu próxima "primera vez" debería ser una experiencia guiada que te acompañe paso a paso, como un taller para principiantes o un retiro de iniciación.';
+                } else {
+                    tipo = 'Multiaventurero 🌟';
+                    descripcion = 'Eres versátil y curioso. Cualquier experiencia que elijas será una aventura. ¡Explora nuestras opciones y encuentra la que más resuene contigo!';
+                }
+
+                resultType.textContent = tipo;
+                resultDesc.textContent = descripcion;
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                form.querySelectorAll('input[type="radio"]').forEach(input => {
+                    input.disabled = true;
+                });
+                form.querySelector('button[type="submit"]').disabled = true;
+                form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-check-circle"></i> ¡Ya respondiste!';
+            });
+        })();
+
+        // ==========================================
+        // NEWSLETTER FORM (About page)
+        // ==========================================
+        (function() {
+            const form = document.getElementById('aboutNewsletterForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = form.querySelector('input[type="email"]');
+                if (!input.value) {
+                    alert('Por favor, ingresa tu email.');
+                    return;
+                }
+                alert('¡Bienvenida/o a la comunidad! Revisa tu email para tu descuento.');
+                input.value = '';
+            });
+        })();
+    </script>
+
+</body>
+</html>

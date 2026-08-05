@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'experiencias',
-    'aventurero'
+    'aventurero',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -135,4 +136,23 @@ STATIC_DIRS = [BASE_DIR / "static"]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+### SORL-THUMBNAIL ###
+THUMBNAIL_CACHE = 'default'
+THUMBNAIL_FORMAT = 'WEBP'
+THUMBNAIL_QUALITY = 85
+THUMBNAIL_MAX_SIZE = 4096
+THUMBNAIL_UPSCALE = True
+THUMBNAIL_ENGINE = 'sorl.thumbnail.engines.pil_engine.Engine'
+THUMBNAIL_DEBUG = env('THUMBNAIL_DEBUG')
+
 AUTH_USER_MODEL = 'aventurero.Aventurero'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
+
+

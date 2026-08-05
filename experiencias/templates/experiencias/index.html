@@ -1,4 +1,4 @@
-{{% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +55,7 @@
                 <li><a href="#experiences" class="nav__link">Experiences</a></li>
                 <li><a href="#community" class="nav__link">Community</a></li>
                 <li><a href="#lore" class="nav__link">The Lore</a></li>
-                <li><a href="#about" class="nav__link">About</a></li>
+                <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link">Sobre Mi</a></li>
                 <li><a href="#contact" class="nav__link nav__link--cta">Join the Adventure</a></li>
             </ul>
         </nav>
@@ -103,7 +103,7 @@
             <div class="hero__image desktop-only">
                 <div class="hero__image-placeholder">
                     <i class="fas fa-mountain-sun"></i>
-                    <!-- In production: <img src="hero-image.jpg" alt="Lorena facilitating a workshop"> -->
+                    <!--img src='{{experiencia_estrella.foto.url}}' alt="Lorena facilitating a workshop"-->
                 </div>
                 <div class="hero__floating-badge badge-1">
                     <i class="fas fa-star"></i> First Timer's Club
@@ -168,75 +168,65 @@
             </div>
 
             <div class="experiences__grid">
-                <!-- Experience Card 1 -->
-                <article class="experience-card">
-                    <div class="experience-card__image">
-                        <i class="fas fa-mountain"></i>
-                        <!-- In production: <img src="exp1.jpg" alt="Creativity Bootcamp"> -->
-                        <span class="experience-card__badge">🔥 New</span>
-                    </div>
-                    <div class="experience-card__body">
-                        <h3 class="experience-card__title">Creativity Bootcamp</h3>
-                        <p class="experience-card__description">
-                            Unlock your creative potential through guided exercises and group collaboration.
-                        </p>
-                        <div class="experience-card__meta">
-                            <span><i class="far fa-calendar"></i> Aug 15-17</span>
-                            <span><i class="far fa-clock"></i> 3 days</span>
-                            <span><i class="fas fa-users"></i> 12 spots left</span>
+                {% load thumbnail %}
+                
+                {% for experiencia in experiencias %}
+                    <article class="experience-card">
+                        <div class="experience-card__image">
+                            {% if experiencia.foto %}
+                                {# Generate thumbnails at different sizes for responsive srcset #}
+                                {% thumbnail experiencia.foto "400x250" crop="center" format="WEBP" quality=85 as small %}
+                                {% thumbnail experiencia.foto "800x500" crop="center" format="WEBP" quality=85 as medium %}
+                                {% thumbnail experiencia.foto "1200x750" crop="center" format="WEBP" quality=85 as large %}
+                                
+                                <img src="{{ medium.url }}"
+                                    srcset="{{ small.url }} {{ small.width }}w,
+                                            {{ medium.url }} {{ medium.width }}w,
+                                            {{ large.url }} {{ large.width }}w"
+                                    sizes="(max-width: 600px) 100vw,
+                                            (max-width: 1024px) 50vw,
+                                            33vw"
+                                    width="{{ medium.width }}"
+                                    height="{{ medium.height }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                    alt="{{ experiencia.titulo }}">
+                                {% endthumbnail %}{% endthumbnail %}{% endthumbnail %}
+                            {% else %}
+                                {# Fallback if no image #}
+                                <div class="experience-card__placeholder">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                            {% endif %}
+                            
+                            {# Badge logic (optional) #}
+                            {% if forloop.first %}
+                                <span class="experience-card__badge">🔥 New</span>
+                            {% elif forloop.counter == 2 %}
+                                <span class="experience-card__badge">🌍 Bestseller</span>
+                            {% else %}
+                                <span class="experience-card__badge">💫 Just Added</span>
+                            {% endif %}
                         </div>
-                        <div class="experience-card__footer">
-                            <span class="experience-card__price">$297</span>
-                            <a href="#" class="btn btn--secondary btn--small">Learn More</a>
+                        
+                        <div class="experience-card__body">
+                            <h3 class="experience-card__title">{{ experiencia.titulo }}</h3>
+                            <p class="experience-card__description">
+                                {{ experiencia.descripcion|truncatewords:15 }}
+                            </p>
+                            <div class="experience-card__meta">
+                                <span><i class="far fa-calendar"></i> {{ experiencia.fecha_inicio|date:"M j" }} - {{ experiencia.fecha_termina|date:"j" }}</span>
+                                <span><i class="fas fa-users"></i> {{ experiencia.spots_available|default:"12" }} spots left</span>
+                            </div>
+                            <div class="experience-card__footer">
+                                <span class="experience-card__price">${{ experiencia.price|default:"80" }}</span>
+                                <a href="#" class="btn btn--secondary btn--small">Learn More</a>
+                            </div>
                         </div>
-                    </div>
-                </article>
-
-                <!-- Experience Card 2 -->
-                <article class="experience-card">
-                    <div class="experience-card__image">
-                        <i class="fas fa-compass"></i>
-                        <span class="experience-card__badge">🌍 Bestseller</span>
-                    </div>
-                    <div class="experience-card__body">
-                        <h3 class="experience-card__title">Solo Travel 101</h3>
-                        <p class="experience-card__description">
-                            Conquer your fear of solo travel with a supportive group and expert guidance.
-                        </p>
-                        <div class="experience-card__meta">
-                            <span><i class="far fa-calendar"></i> Sep 5-12</span>
-                            <span><i class="far fa-clock"></i> 7 days</span>
-                            <span><i class="fas fa-users"></i> 8 spots left</span>
-                        </div>
-                        <div class="experience-card__footer">
-                            <span class="experience-card__price">$1,197</span>
-                            <a href="#" class="btn btn--secondary btn--small">Learn More</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Experience Card 3 - Hidden on mobile, visible on tablet+ -->
-                <article class="experience-card tablet-only">
-                    <div class="experience-card__image">
-                        <i class="fas fa-hand-holding-heart"></i>
-                        <span class="experience-card__badge">💫 Just Added</span>
-                    </div>
-                    <div class="experience-card__body">
-                        <h3 class="experience-card__title">Courage Workshop</h3>
-                        <p class="experience-card__description">
-                            Face your fears and build the courage to pursue your boldest dreams.
-                        </p>
-                        <div class="experience-card__meta">
-                            <span><i class="far fa-calendar"></i> Oct 2-3</span>
-                            <span><i class="far fa-clock"></i> 2 days</span>
-                            <span><i class="fas fa-users"></i> 15 spots left</span>
-                        </div>
-                        <div class="experience-card__footer">
-                            <span class="experience-card__price">$197</span>
-                            <a href="#" class="btn btn--secondary btn--small">Learn More</a>
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                {% empty %}
+                    <p class="no-experiences">No experiences available at the moment. Check back soon!</p>
+                {% endfor %}
             </div>
 
             <div class="experiences__cta">
@@ -401,4 +391,44 @@
                 <div class="footer__brand">
                     <span class="logo-symbol">✦</span>
                     <span class="logo-text">Lorena Vásquez</span>
-                    <p class="footer__tagline">Dare to begin. Together.</p>}
+                    <p class="footer__tagline">Dare to begin. Together.</p>
+                    <div class="footer__social">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="{% url 'experiencias:home' %}#experiences">Experiencias</a></li>
+                        <li><a href="{% url 'experiencias:home' %}#community">Comunidad</a></li>
+                        <li><a href="{% url 'experiencias:home' %}#lore">The Lore</a></li>
+                        <li><a href="{% url 'experiencias:sobre_mi' %}">Sobre mí</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos</a></li>
+                    </ul>
+                </div>
+                <div class="footer__badge">
+                    <div class="footer__community-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Orgullosa miembro del <strong>First Timer's Club</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Lorena Vásquez. Todos los derechos reservados. Hecho con ❤️ y valentía.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
