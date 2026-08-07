@@ -1,0 +1,924 @@
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad — Lorena Vásquez</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'experiencias/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'experiencias/lore_favicon.ico' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'experiencias/lore_favicon.svg' %}">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / NAVIGATION                          -->
+    <!-- ============================================ -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <a href="{% url 'experiencias:home' %}">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                </a>
+            </div>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav__menu" id="navMenu">
+                <li><a href="{% url 'experiencias:experiencias' %}" class="nav__link">Experiencias</a></li>
+                <li><a href="{% url 'experiencias:comunidad' %}" class="nav__link nav__link--active">Comunidad</a></li>
+                <li><a href="{% url 'experiencias:home' %}#lore" class="nav__link">The Lore</a></li>
+                <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link">Sobre Mí</a></li>
+                <li><a href="{% url 'experiencias:home' %}#contact" class="nav__link nav__link--cta">Únete a la Aventura</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION                                -->
+    <!-- ============================================ -->
+    <section class="community-hero" id="community-hero">
+        <div class="community-hero__container container">
+            <div class="community-hero__content">
+                <span class="community-hero__badge">🌍 La tribu</span>
+                <h1 class="community-hero__title">
+                    No estás solo. <span class="highlight">Somos una tribu.</span>
+                </h1>
+                <p class="community-hero__description">
+                    Miles de personas ya están transformando sus "primeras veces" en recuerdos compartidos. 
+                    Conoce a la comunidad que hace posible esta aventura.
+                </p>
+                <div class="community-hero__actions">
+                    <a href="#join" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-users"></i> Únete a la comunidad
+                    </a>
+                    <a href="#stories" class="btn btn--secondary">
+                        <i class="fas fa-play"></i> Ver historias
+                    </a>
+                </div>
+            </div>
+            <div class="community-hero__image desktop-only">
+                <!-- 
+                    NOTA: Imagen de grupo de una experiencia
+                    Dimensiones: 800x600 px
+                    Formato: WEBP
+                    Alt: Grupo de aventureros de Lorena
+                -->
+                {% thumbnail "experiencias/imagenes/community-hero.webp" "800x600" crop="center" format="WEBP" quality=85 as hero %}
+                    <img src="{{ hero.url }}" 
+                         alt="Grupo de aventureros de Lorena"
+                         width="" 
+                         height=""
+                         loading="eager">
+                {% endthumbnail %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ESTADÍSTICAS EN VIVO                        -->
+    <!-- ============================================ -->
+    <section class="community-stats" id="stats">
+        <div class="container">
+            <div class="community-stats__grid">
+                <div class="stat stat--community">
+                    <span class="stat__number" data-count="2400">0</span>
+                    <span class="stat__label">Aventureros activos</span>
+                </div>
+                <div class="stat stat--community">
+                    <span class="stat__number" data-count="47">0</span>
+                    <span class="stat__label">Experiencias completadas</span>
+                </div>
+                <div class="stat stat--community">
+                    <span class="stat__number" data-count="12">0</span>
+                    <span class="stat__label">Países representados</span>
+                </div>
+                <div class="stat stat--community">
+                    <span class="stat__number" data-count="98">0</span>
+                    <span class="stat__label">% de recomendación</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- HISTORIAS DE LA COMUNIDAD                    -->
+    <!-- ============================================ -->
+    <section class="community-stories" id="stories">
+        <div class="container">
+            <div class="community-stories__header">
+                <span class="section-tag">💬 Historias reales</span>
+                <h2 class="section-title">Lo que nuestra tribu ha logrado</h2>
+                <p class="section-subtitle">
+                    Cada historia es un testimonio de lo que pasa cuando nos atrevemos a dar el primer paso juntos.
+                </p>
+            </div>
+
+            <div class="community-stories__slider" id="storiesSlider">
+                <div class="community-stories__track" id="storiesTrack">
+                    <!-- Historia 1 -->
+                    <div class="story-card">
+                        <div class="story-card__image">
+                            <!-- 
+                                NOTA: Foto de la persona (cuadrada)
+                                Dimensiones: 400x400 px
+                                Formato: WEBP
+                                Alt: María C.
+                            -->
+                            {% thumbnail "experiencias/imagenes/story-maria.webp" "400x400" crop="center" format="WEBP" quality=85 as s1 %}
+                                <img src="{{ s1.url }}" 
+                                     alt="María C." 
+                                     width="" 
+                                     height=""
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <span class="story-card__badge">🌟 Primer viaje sola</span>
+                        </div>
+                        <div class="story-card__body">
+                            <h3 class="story-card__title">María C.</h3>
+                            <p class="story-card__text">
+                                "Nunca imaginé que podría viajar sola. Lorena y esta comunidad me dieron la confianza que necesitaba. 
+                                Hoy ya he visitado 4 países por mi cuenta."
+                            </p>
+                            <div class="story-card__meta">
+                                <span><i class="fas fa-map-pin"></i> Colombia → Europa</span>
+                                <span><i class="far fa-heart"></i> 48 reacciones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historia 2 -->
+                    <div class="story-card tablet-only">
+                        <div class="story-card__image">
+                            <!-- 
+                                NOTA: Foto de la persona (cuadrada)
+                                Dimensiones: 400x400 px
+                                Formato: WEBP
+                                Alt: Carlos R.
+                            -->
+                            {% thumbnail "experiencias/imagenes/story-carlos.webp" "400x400" crop="center" format="WEBP" quality=85 as s2 %}
+                                <img src="{{ s2.url }}" 
+                                     alt="Carlos R." 
+                                     width="" 
+                                     height=""
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <span class="story-card__badge">🎨 Proyecto creativo</span>
+                        </div>
+                        <div class="story-card__body">
+                            <h3 class="story-card__title">Carlos R.</h3>
+                            <p class="story-card__text">
+                                "Después del taller de creatividad, finalmente empecé el proyecto que había estado postergando por años. 
+                                La energía de este grupo es imparable."
+                            </p>
+                            <div class="story-card__meta">
+                                <span><i class="fas fa-map-pin"></i> Medellín</span>
+                                <span><i class="far fa-heart"></i> 32 reacciones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historia 3 -->
+                    <div class="story-card desktop-only">
+                        <div class="story-card__image">
+                            <!-- 
+                                NOTA: Foto de la persona (cuadrada)
+                                Dimensiones: 400x400 px
+                                Formato: WEBP
+                                Alt: Laura M.
+                            -->
+                            {% thumbnail "experiencias/imagenes/story-laura.webp" "400x400" crop="center" format="WEBP" quality=85 as s3 %}
+                                <img src="{{ s3.url }}" 
+                                     alt="Laura M." 
+                                     width="" 
+                                     height=""
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <span class="story-card__badge">🚀 Emprendimiento</span>
+                        </div>
+                        <div class="story-card__body">
+                            <h3 class="story-card__title">Laura M.</h3>
+                            <p class="story-card__text">
+                                "Lorena me ayudó a renunciar a mi trabajo corporativo y empezar mi propio negocio. 
+                                Esta comunidad es pura magia. No podría haberlo hecho sola."
+                            </p>
+                            <div class="story-card__meta">
+                                <span><i class="fas fa-map-pin"></i> Bogotá</span>
+                                <span><i class="far fa-heart"></i> 56 reacciones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historia 4 (Solo desktop) -->
+                    <div class="story-card desktop-only">
+                        <div class="story-card__image">
+                            <!-- 
+                                NOTA: Foto de la persona (cuadrada)
+                                Dimensiones: 400x400 px
+                                Formato: WEBP
+                                Alt: Andrés F.
+                            -->
+                            {% thumbnail "experiencias/imagenes/story-andres.webp" "400x400" crop="center" format="WEBP" quality=85 as s4 %}
+                                <img src="{{ s4.url }}" 
+                                     alt="Andrés F." 
+                                     width="" 
+                                     height=""
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <span class="story-card__badge">🧠 Superación personal</span>
+                        </div>
+                        <div class="story-card__body">
+                            <h3 class="story-card__title">Andrés F.</h3>
+                            <p class="story-card__text">
+                                "El retiro de coraje cambió mi vida. Aprendí a enfrentar mis miedos y hoy soy una persona más segura. 
+                                Gracias a toda la tribu."
+                            </p>
+                            <div class="story-card__meta">
+                                <span><i class="fas fa-map-pin"></i> Madrid</span>
+                                <span><i class="far fa-heart"></i> 43 reacciones</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="stories-btn stories-btn--prev" id="storiesPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="stories-btn stories-btn--next" id="storiesNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="community-stories__dots" id="storiesDots"></div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- EL PODIO AVENTURERO                         -->
+    <!-- ============================================ -->
+    <section class="community-podium" id="podium">
+        <div class="container">
+            <div class="community-podium__header">
+                <span class="section-tag">🏅 Celebra a la tribu</span>
+                <h2 class="section-title">El podio aventurero</h2>
+                <p class="section-subtitle">
+                    Reconocemos a los miembros más destacados de nuestra comunidad. 
+                    ¿Quién merece estar en el podio?
+                </p>
+            </div>
+
+            <div class="community-podium__grid">
+                <!-- Categoría 1: Más divertido -->
+                <div class="podium-card">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-laugh-beam"></i>
+                    </div>
+                    <h3 class="podium-card__title">Más divertido</h3>
+                    <p class="podium-card__description">
+                        La persona que siempre tiene una sonrisa y contagia alegría en cada encuentro.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 2: Más elocuente -->
+                <div class="podium-card">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="podium-card__title">Más elocuente</h3>
+                    <p class="podium-card__description">
+                        La persona que sabe expresarse y comunicar sus ideas con claridad y pasión.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 3: Más fiel -->
+                <div class="podium-card">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="podium-card__title">Más fiel</h3>
+                    <p class="podium-card__description">
+                        La persona que nunca falta a las actividades y siempre está presente para la tribu.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 4: Más talentoso -->
+                <div class="podium-card tablet-only">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="podium-card__title">Más talentoso</h3>
+                    <p class="podium-card__description">
+                        La persona que tiene un don especial y lo comparte generosamente con la comunidad.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 5: El ganador -->
+                <div class="podium-card tablet-only">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="podium-card__title">El ganador</h3>
+                    <p class="podium-card__description">
+                        La persona que siempre logra sus metas y gana las actividades de la comunidad.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 6: Más enérgico -->
+                <div class="podium-card desktop-only">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="podium-card__title">Más enérgico</h3>
+                    <p class="podium-card__description">
+                        La persona que tiene energía infinita y motiva a todos a seguir adelante.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 7: Más abrazable -->
+                <div class="podium-card desktop-only">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 class="podium-card__title">Más abrazable</h3>
+                    <p class="podium-card__description">
+                        La persona más tierna y carismática, que siempre tiene un abrazo para dar.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+
+                <!-- Categoría 8: Mejor amigo -->
+                <div class="podium-card desktop-only">
+                    <div class="podium-card__icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="podium-card__title">Mejor amigo</h3>
+                    <p class="podium-card__description">
+                        La persona que todos quieren tener como amigo, siempre dispuesta a escuchar y apoyar.
+                    </p>
+                    <a href="#" class="btn btn--secondary btn--small btn--podium-vote">
+                        <i class="fas fa-arrow-right"></i> Ve y vota
+                    </a>
+                </div>
+            </div>
+
+            <div class="community-podium__info">
+                <p>
+                    <i class="fas fa-info-circle"></i> 
+                    Las votaciones se cierran el último día de cada mes. 
+                    Los ganadores serán anunciados en nuestra comunidad.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- MAPA DE LA COMUNIDAD                        -->
+    <!-- ============================================ -->
+    <section class="community-map" id="map">
+        <div class="container">
+            <div class="community-map__header">
+                <span class="section-tag">📍 Presencia global</span>
+                <h2 class="section-title">La comunidad en el mundo</h2>
+                <p class="section-subtitle">
+                    Nuestra tribu está creciendo en cada rincón del planeta. Estas son algunas de las ciudades donde tenemos presencia activa.
+                </p>
+            </div>
+
+            <div class="community-map__container">
+                <!-- 
+                    NOTA: Mapa del mundo estático
+                    Dimensiones: 1200x600 px
+                    Formato: WEBP
+                    Alt: Mapa de la comunidad de Lorena
+                -->
+                {% thumbnail "experiencias/imagenes/community-map.webp" "1200x600" crop="center" format="WEBP" quality=85 as map %}
+                    <img src="{{ map.url }}" 
+                         alt="Mapa de la comunidad de Lorena alrededor del mundo"
+                         width="" 
+                         height=""
+                         loading="lazy"
+                         class="community-map__image">
+                {% endthumbnail %}
+                
+                <!-- Marcadores superpuestos (solo para desktop) -->
+                <div class="community-map__markers desktop-only">
+                    <div class="map-marker map-marker--medellin">
+                        <span class="map-marker__dot"></span>
+                        <span class="map-marker__label">Medellín</span>
+                    </div>
+                    <div class="map-marker map-marker--bogota">
+                        <span class="map-marker__dot"></span>
+                        <span class="map-marker__label">Bogotá</span>
+                    </div>
+                    <div class="map-marker map-marker--madrid">
+                        <span class="map-marker__dot"></span>
+                        <span class="map-marker__label">Madrid</span>
+                    </div>
+                    <div class="map-marker map-marker--mexico">
+                        <span class="map-marker__dot"></span>
+                        <span class="map-marker__label">México DF</span>
+                    </div>
+                    <div class="map-marker map-marker--buenos-aires">
+                        <span class="map-marker__dot"></span>
+                        <span class="map-marker__label">Buenos Aires</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="community-map__cities mobile-only">
+                <span class="city-tag">📍 Medellín</span>
+                <span class="city-tag">📍 Bogotá</span>
+                <span class="city-tag">📍 Madrid</span>
+                <span class="city-tag">📍 México DF</span>
+                <span class="city-tag">📍 Buenos Aires</span>
+                <span class="city-tag">📍 +7 más</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- FORO DE DISCUSIÓN                           -->
+    <!-- ============================================ -->
+    <section class="community-forum" id="forum">
+        <div class="container">
+            <div class="community-forum__header">
+                <span class="section-tag">💬 El campamento virtual</span>
+                <h2 class="section-title">Conversaciones que inspiran</h2>
+                <p class="section-subtitle">
+                    Nuestro foro es el espacio donde la comunidad se encuentra, comparte y crece juntos.
+                </p>
+            </div>
+
+            <!-- Vista Desktop (Tabla) -->
+            <div class="community-forum__table desktop-only">
+                <div class="forum-table">
+                    <div class="forum-table__header">
+                        <span class="forum-table__topic">Tema</span>
+                        <span class="forum-table__author">Autor</span>
+                        <span class="forum-table__replies">Respuestas</span>
+                        <span class="forum-table__last">Último mensaje</span>
+                    </div>
+                    <div class="forum-table__row">
+                        <span class="forum-table__topic">👋 ¡Hola! Soy nueva, ¿cómo empiezo?</span>
+                        <span class="forum-table__author">María C.</span>
+                        <span class="forum-table__replies">12</span>
+                        <span class="forum-table__last">Hace 2 horas</span>
+                    </div>
+                    <div class="forum-table__row">
+                        <span class="forum-table__topic">🗺️ Consejos para mi primer viaje sola</span>
+                        <span class="forum-table__author">Laura M.</span>
+                        <span class="forum-table__replies">8</span>
+                        <span class="forum-table__last">Hace 5 horas</span>
+                    </div>
+                    <div class="forum-table__row">
+                        <span class="forum-table__topic">🧠 ¿Cómo superar el miedo al fracaso?</span>
+                        <span class="forum-table__author">Carlos R.</span>
+                        <span class="forum-table__replies">15</span>
+                        <span class="forum-table__last">Hace 1 día</span>
+                    </div>
+                    <div class="forum-table__row">
+                        <span class="forum-table__topic">🎨 Compartamos nuestros proyectos creativos</span>
+                        <span class="forum-table__author">Andrés F.</span>
+                        <span class="forum-table__replies">23</span>
+                        <span class="forum-table__last">Hace 2 días</span>
+                    </div>
+                    <div class="forum-table__row">
+                        <span class="forum-table__topic">💬 ¿Alguien más sintió esto después del retiro?</span>
+                        <span class="forum-table__author">Sofía M.</span>
+                        <span class="forum-table__replies">6</span>
+                        <span class="forum-table__last">Hace 3 días</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vista Mobile (Tarjetas) -->
+            <div class="community-forum__cards mobile-only tablet-only">
+                <div class="forum-card">
+                    <span class="forum-card__topic">👋 ¡Hola! Soy nueva, ¿cómo empiezo?</span>
+                    <div class="forum-card__meta">
+                        <span><i class="fas fa-user"></i> María C.</span>
+                        <span><i class="fas fa-comment"></i> 12</span>
+                        <span><i class="far fa-clock"></i> Hace 2h</span>
+                    </div>
+                </div>
+                <div class="forum-card">
+                    <span class="forum-card__topic">🗺️ Consejos para mi primer viaje sola</span>
+                    <div class="forum-card__meta">
+                        <span><i class="fas fa-user"></i> Laura M.</span>
+                        <span><i class="fas fa-comment"></i> 8</span>
+                        <span><i class="far fa-clock"></i> Hace 5h</span>
+                    </div>
+                </div>
+                <div class="forum-card">
+                    <span class="forum-card__topic">🧠 ¿Cómo superar el miedo al fracaso?</span>
+                    <div class="forum-card__meta">
+                        <span><i class="fas fa-user"></i> Carlos R.</span>
+                        <span><i class="fas fa-comment"></i> 15</span>
+                        <span><i class="far fa-clock"></i> Hace 1d</span>
+                    </div>
+                </div>
+                <div class="forum-card">
+                    <span class="forum-card__topic">🎨 Compartamos nuestros proyectos creativos</span>
+                    <div class="forum-card__meta">
+                        <span><i class="fas fa-user"></i> Andrés F.</span>
+                        <span><i class="fas fa-comment"></i> 23</span>
+                        <span><i class="far fa-clock"></i> Hace 2d</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="community-forum__cta">
+                <a href="#" class="btn btn--secondary btn--outline">
+                    <i class="fas fa-comment"></i> Ver todas las conversaciones
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PRÓXIMOS EVENTOS LOCALES                    -->
+    <!-- ============================================ -->
+    <section class="community-events" id="events">
+        <div class="container">
+            <div class="community-events__header">
+                <span class="section-tag">📅 Conéctate en persona</span>
+                <h2 class="section-title">Próximos eventos locales</h2>
+                <p class="section-subtitle">
+                    Encuentros para compartir, aprender y conectar con otros aventureros.
+                </p>
+            </div>
+
+            <div class="community-events__grid">
+                <div class="event-card">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 400x250 px
+                        Formato: WEBP
+                        Alt: Café de Aventureros en Medellín
+                    -->
+                    {% thumbnail "experiencias/imagenes/event-medellin.webp" "400x250" crop="center" format="WEBP" quality=85 as e1 %}
+                        <img src="{{ e1.url }}" 
+                             alt="Café de Aventureros en Medellín"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-card__image">
+                    {% endthumbnail %}
+                    <div class="event-card__body">
+                        <span class="event-card__badge">📍 Presencial</span>
+                        <h3 class="event-card__title">Café de Aventureros</h3>
+                        <p class="event-card__details">
+                            <i class="far fa-calendar"></i> 20 de agosto, 6:00 PM
+                        </p>
+                        <p class="event-card__details">
+                            <i class="fas fa-map-pin"></i> Medellín, Colombia
+                        </p>
+                        <a href="#" class="btn btn--secondary btn--small">Interesado</a>
+                    </div>
+                </div>
+
+                <div class="event-card tablet-only">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 400x250 px
+                        Formato: WEBP
+                        Alt: Encuentro Creativo Virtual
+                    -->
+                    {% thumbnail "experiencias/imagenes/event-virtual.webp" "400x250" crop="center" format="WEBP" quality=85 as e2 %}
+                        <img src="{{ e2.url }}" 
+                             alt="Encuentro Creativo Virtual"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-card__image">
+                    {% endthumbnail %}
+                    <div class="event-card__body">
+                        <span class="event-card__badge">💻 Virtual</span>
+                        <h3 class="event-card__title">Encuentro Creativo Virtual</h3>
+                        <p class="event-card__details">
+                            <i class="far fa-calendar"></i> 25 de agosto, 7:00 PM
+                        </p>
+                        <p class="event-card__details">
+                            <i class="fas fa-map-pin"></i> Online (Zoom)
+                        </p>
+                        <a href="#" class="btn btn--secondary btn--small">Interesado</a>
+                    </div>
+                </div>
+
+                <div class="event-card desktop-only">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 400x250 px
+                        Formato: WEBP
+                        Alt: Retiro de Fin de Semana en Bogotá
+                    -->
+                    {% thumbnail "experiencias/imagenes/event-bogota.webp" "400x250" crop="center" format="WEBP" quality=85 as e3 %}
+                        <img src="{{ e3.url }}" 
+                             alt="Retiro de Fin de Semana en Bogotá"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-card__image">
+                    {% endthumbnail %}
+                    <div class="event-card__body">
+                        <span class="event-card__badge">📍 Presencial</span>
+                        <h3 class="event-card__title">Retiro de Fin de Semana</h3>
+                        <p class="event-card__details">
+                            <i class="far fa-calendar"></i> 5-6 de septiembre
+                        </p>
+                        <p class="event-card__details">
+                            <i class="fas fa-map-pin"></i> Bogotá, Colombia
+                        </p>
+                        <a href="#" class="btn btn--secondary btn--small">Interesado</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- LLAMADO A LA ACCIÓN FINAL                   -->
+    <!-- ============================================ -->
+    <section class="community-cta" id="join">
+        <div class="container">
+            <div class="community-cta__content">
+                <span class="section-tag">🚀 Este es tu momento</span>
+                <h2 class="section-title">¿Listo para ser parte de algo más grande?</h2>
+                <p class="community-cta__text">
+                    La comunidad te espera con los brazos abiertos. Tu próxima "primera vez" 
+                    está a solo un paso de distancia.
+                </p>
+                <div class="community-cta__buttons">
+                    <a href="#" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-users"></i> Únete a la comunidad
+                    </a>
+                    <a href="{% url 'experiencias:experiencias' %}" class="btn btn--secondary btn--outline">
+                        <i class="fas fa-compass"></i> Explora las experiencias
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                      -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                    <p class="footer__tagline">Dare to begin. Together.</p>
+                    <div class="footer__social">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="{% url 'experiencias:experiencias' %}">Experiencias</a></li>
+                        <li><a href="{% url 'experiencias:comunidad' %}">Comunidad</a></li>
+                        <li><a href="{% url 'experiencias:home' %}">The Lore</a></li>
+                        <li><a href="{% url 'experiencias:sobre_mi' %}">Sobre mí</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos</a></li>
+                    </ul>
+                </div>
+                <div class="footer__badge">
+                    <div class="footer__community-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Orgullosa miembro del <strong>First Timer's Club</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Lorena Vásquez. Todos los derechos reservados. Hecho con ❤️ y valentía.</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- ============================================ -->
+    <!-- JAVASCRIPT                                  -->
+    <!-- ============================================ -->
+    <script>
+        // ==========================================
+        // MOBILE MENU TOGGLE
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ==========================================
+        // CONTADOR ANIMADO (Estadísticas)
+        // ==========================================
+        (function() {
+            const statNumbers = document.querySelectorAll('.stat--community .stat__number');
+            
+            if (!statNumbers.length) return;
+
+            function animateNumber(element) {
+                const target = parseInt(element.dataset.count);
+                const duration = 2000; // 2 segundos
+                const startTime = performance.now();
+
+                function update(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Función de easing (suave)
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const current = Math.round(eased * target);
+                    
+                    element.textContent = current;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        element.textContent = target + (target === 98 ? '%' : '+');
+                    }
+                }
+
+                requestAnimationFrame(update);
+            }
+
+            // Intersection Observer para activar cuando la sección sea visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        statNumbers.forEach(num => {
+                            if (!num.dataset.animated) {
+                                animateNumber(num);
+                                num.dataset.animated = 'true';
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            const statsSection = document.querySelector('.community-stats');
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+        })();
+
+        // ==========================================
+        // HISTORIAS DE LA COMUNIDAD (Slider)
+        // ==========================================
+        (function() {
+            const track = document.getElementById('storiesTrack');
+            const prevBtn = document.getElementById('storiesPrev');
+            const nextBtn = document.getElementById('storiesNext');
+            const dotsContainer = document.getElementById('storiesDots');
+
+            if (!track || !prevBtn || !nextBtn) return;
+
+            const cards = track.querySelectorAll('.story-card');
+            const total = cards.length;
+            let currentIndex = 0;
+            let visibleCount = 1;
+
+            function getVisibleCount() {
+                if (window.innerWidth >= 1024) return 3;
+                if (window.innerWidth >= 768) return 2;
+                return 1;
+            }
+
+            function updateSlider() {
+                visibleCount = getVisibleCount();
+                const cardWidth = 100 / visibleCount;
+                
+                cards.forEach(card => {
+                    card.style.minWidth = `${cardWidth}%`;
+                });
+
+                const maxIndex = Math.max(0, total - visibleCount);
+                if (currentIndex > maxIndex) {
+                    currentIndex = maxIndex;
+                }
+
+                const offset = -currentIndex * cardWidth;
+                track.style.transform = `translateX(${offset}%)`;
+
+                // Actualizar dots
+                const dots = dotsContainer?.querySelectorAll('.story-dot');
+                const totalDots = Math.ceil(total / visibleCount);
+                dots?.forEach((dot, i) => {
+                    dot.classList.toggle('story-dot--active', i === currentIndex);
+                });
+            }
+
+            // Crear dots
+            if (dotsContainer) {
+                const totalDots = Math.ceil(total / 3);
+                for (let i = 0; i < totalDots; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `story-dot${i === 0 ? ' story-dot--active' : ''}`;
+                    dot.dataset.index = i;
+                    dot.addEventListener('click', () => {
+                        currentIndex = i;
+                        updateSlider();
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            prevBtn.addEventListener('click', () => {
+                const maxIndex = Math.max(0, total - getVisibleCount());
+                currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const maxIndex = Math.max(0, total - getVisibleCount());
+                currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+                updateSlider();
+            });
+
+            // Actualizar en resize
+            window.addEventListener('resize', updateSlider);
+            updateSlider();
+        })();
+
+        // ==========================================
+        // NEWSLETTER FORM (Footer)
+        // ==========================================
+        (function() {
+            const form = document.getElementById('newsletterForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = document.getElementById('newsletterEmail');
+                const success = document.getElementById('newsletterSuccess');
+
+                if (!input.value) {
+                    alert('Por favor, ingresa tu email.');
+                    return;
+                }
+
+                success.style.display = 'block';
+                input.value = '';
+                setTimeout(() => {
+                    success.style.display = 'none';
+                }, 5000);
+            });
+        })();
+    </script>
+
+</body>
+</html>
+
+
+    

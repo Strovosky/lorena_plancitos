@@ -52,9 +52,9 @@
 
             <!-- Navigation Links -->
             <ul class="nav__menu" id="navMenu">
-                <li><a href="#experiences" class="nav__link">Experiences</a></li>
-                <li><a href="#community" class="nav__link">Community</a></li>
-                <li><a href="#lore" class="nav__link">The Lore</a></li>
+                <li><a href="{% url 'experiencias:experiencias' %}" class="nav__link">Experiencias</a></li>
+                <li><a href="{% url 'experiencias:comunidad' %}" class="nav__link">Comunidad</a></li>
+                <li><a href="{% url 'experiencias:home' %}" class="nav__link">The Lore</a></li>
                 <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link">Sobre Mi</a></li>
                 <li><a href="#contact" class="nav__link nav__link--cta">Join the Adventure</a></li>
             </ul>
@@ -219,7 +219,7 @@
                                 <span><i class="fas fa-users"></i> {{ experiencia.spots_available|default:"12" }} spots left</span>
                             </div>
                             <div class="experience-card__footer">
-                                <span class="experience-card__price">${{ experiencia.price|default:"80" }}</span>
+                                <span class="experience-card__price">${{ experiencia.precio|default:"60'000" }}</span>
                                 <a href="#" class="btn btn--secondary btn--small">Learn More</a>
                             </div>
                         </div>

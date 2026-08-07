@@ -1,0 +1,1320 @@
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventureros — Lorena Vásquez</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'experiencias/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'experiencias/lore_favicon.ico' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'experiencias/lore_favicon.svg' %}">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / NAVIGATION                          -->
+    <!-- ============================================ -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <a href="{% url 'experiencias:home' %}">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                </a>
+            </div>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav__menu" id="navMenu">
+                <li><a href="{% url 'experiencias:experiencias' %}" class="nav__link">Experiencias</a></li>
+                <li><a href="{% url 'experiencias:comunidad' %}" class="nav__link">Comunidad</a></li>
+                <li><a href="{% url 'experiencias:home' %}#lore" class="nav__link">The Lore</a></li>
+                <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link">Sobre Mí</a></li>
+                <li><a href="{% url 'experiencias:aventureros' %}" class="nav__link nav__link--active">Aventureros</a></li>
+                <li><a href="{% url 'experiencias:home' %}#contact" class="nav__link nav__link--cta">Únete a la Aventura</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION                                -->
+    <!-- ============================================ -->
+    <section class="adventurers-hero" id="hero">
+        <div class="adventurers-hero__container container">
+            <div class="adventurers-hero__content">
+                <span class="adventurers-hero__badge">🏅 La tribu</span>
+                <h1 class="adventurers-hero__title">
+                    Aquí celebramos a nuestra <span class="highlight">tribu</span>
+                </h1>
+                <p class="adventurers-hero__description">
+                    Cada voto cuenta. Cada persona es especial. Conoce a quienes hacen grande a esta comunidad.
+                </p>
+                <div class="adventurers-hero__actions">
+                    <a href="#podium-general" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-trophy"></i> Explorar el podio
+                    </a>
+                    <a href="#search" class="btn btn--secondary">
+                        <i class="fas fa-search"></i> Conectar con otros
+                    </a>
+                </div>
+            </div>
+            <div class="adventurers-hero__image desktop-only">
+                <!-- 
+                    NOTA: Imagen de grupo de una experiencia
+                    Dimensiones: 800x600 px
+                    Formato: WEBP
+                    Alt: Grupo de aventureros celebrando
+                -->
+                {% thumbnail "experiencias/imagenes/adventurers-hero.webp" "800x600" crop="center" format="WEBP" quality=85 as hero %}
+                    <img src="{{ hero.url }}" 
+                         alt="Grupo de aventureros celebrando"
+                         width="" 
+                         height=""
+                         loading="eager">
+                {% endthumbnail %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PODIO GENERAL                               -->
+    <!-- ============================================ -->
+    <section class="adventurers-podium" id="podium-general">
+        <div class="container">
+            <div class="adventurers-podium__header">
+                <span class="section-tag">🏆 Líderes</span>
+                <h2 class="section-title">El podio de honor</h2>
+                <p class="section-subtitle">
+                    Los aventureros más votados en cada categoría. Nuestros líderes de la tribu.
+                </p>
+            </div>
+
+            <div class="adventurers-podium__grid" id="podiumGeneralGrid">
+                <!-- Líder 1: Más divertido -->
+                <div class="podium-leader">
+                    <div class="podium-leader__image">
+                        <!-- 
+                            NOTA: Foto del aventurero (cuadrada)
+                            Dimensiones: 200x200 px
+                            Formato: WEBP
+                            Alt: Carlos R.
+                        -->
+                        {% thumbnail "experiencias/imagenes/leader-carlos.webp" "200x200" crop="center" format="WEBP" quality=85 as l1 %}
+                            <img src="{{ l1.url }}" 
+                                 alt="Carlos R."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="podium-leader__badge">🎭 Más divertido</span>
+                        <span class="podium-leader__crown">👑</span>
+                    </div>
+                    <div class="podium-leader__body">
+                        <h3 class="podium-leader__name">Carlos R.</h3>
+                        <p class="podium-leader__votes"><i class="fas fa-thumbs-up"></i> 87 votos</p>
+                    </div>
+                </div>
+
+                <!-- Líder 2: Más elocuente -->
+                <div class="podium-leader">
+                    <div class="podium-leader__image">
+                        {% thumbnail "experiencias/imagenes/leader-laura.webp" "200x200" crop="center" format="WEBP" quality=85 as l2 %}
+                            <img src="{{ l2.url }}" 
+                                 alt="Laura M."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="podium-leader__badge">🗣️ Más elocuente</span>
+                        <span class="podium-leader__crown">👑</span>
+                    </div>
+                    <div class="podium-leader__body">
+                        <h3 class="podium-leader__name">Laura M.</h3>
+                        <p class="podium-leader__votes"><i class="fas fa-thumbs-up"></i> 72 votos</p>
+                    </div>
+                </div>
+
+                <!-- Líder 3: Más fiel -->
+                <div class="podium-leader">
+                    <div class="podium-leader__image">
+                        {% thumbnail "experiencias/imagenes/leader-andres.webp" "200x200" crop="center" format="WEBP" quality=85 as l3 %}
+                            <img src="{{ l3.url }}" 
+                                 alt="Andrés F."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="podium-leader__badge">❤️ Más fiel</span>
+                        <span class="podium-leader__crown">👑</span>
+                    </div>
+                    <div class="podium-leader__body">
+                        <h3 class="podium-leader__name">Andrés F.</h3>
+                        <p class="podium-leader__votes"><i class="fas fa-thumbs-up"></i> 65 votos</p>
+                    </div>
+                </div>
+
+                <!-- Líder 4: Más talentoso -->
+                <div class="podium-leader tablet-only">
+                    <div class="podium-leader__image">
+                        {% thumbnail "experiencias/imagenes/leader-maria.webp" "200x200" crop="center" format="WEBP" quality=85 as l4 %}
+                            <img src="{{ l4.url }}" 
+                                 alt="María C."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="podium-leader__badge">⭐ Más talentoso</span>
+                        <span class="podium-leader__crown">👑</span>
+                    </div>
+                    <div class="podium-leader__body">
+                        <h3 class="podium-leader__name">María C.</h3>
+                        <p class="podium-leader__votes"><i class="fas fa-thumbs-up"></i> 58 votos</p>
+                    </div>
+                </div>
+
+                <!-- Líder 5: El ganador (Desktop) -->
+                <div class="podium-leader desktop-only">
+                    <div class="podium-leader__image">
+                        {% thumbnail "experiencias/imagenes/leader-juan.webp" "200x200" crop="center" format="WEBP" quality=85 as l5 %}
+                            <img src="{{ l5.url }}" 
+                                 alt="Juan P."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="podium-leader__badge">🏆 El ganador</span>
+                        <span class="podium-leader__crown">👑</span>
+                    </div>
+                    <div class="podium-leader__body">
+                        <h3 class="podium-leader__name">Juan P.</h3>
+                        <p class="podium-leader__votes"><i class="fas fa-thumbs-up"></i> 52 votos</p>
+                    </div>
+                </div>
+
+                <!-- Líder 6: Más enérgico (Desktop) -->
+                <div class="podium-leader desktop-only">
+                    <div class="podium-leader__image">
+                        {% thumbnail "experiencias/imagenes/leader-sofia.webp" "200x200" crop="center" format="WEBP" quality=85 as l6 %}
+                            <img src="{{ l6.url }}" 
+                                 alt="Sofía M."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="podium-leader__badge">⚡ Más enérgico</span>
+                        <span class="podium-leader__crown">👑</span>
+                    </div>
+                    <div class="podium-leader__body">
+                        <h3 class="podium-leader__name">Sofía M.</h3>
+                        <p class="podium-leader__votes"><i class="fas fa-thumbs-up"></i> 48 votos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PODIO DE LA SEMANA                           -->
+    <!-- ============================================ -->
+    <section class="adventurers-weekly" id="podium-semanal">
+        <div class="container">
+            <div class="adventurers-weekly__header">
+                <span class="section-tag">⭐ En tendencia</span>
+                <h2 class="section-title">El podio del fin de semana</h2>
+                <p class="section-subtitle">
+                    Estos son los aventureros que brillaron este fin de semana. ¡Sigue votando!
+                </p>
+            </div>
+
+            <div class="adventurers-weekly__grid">
+                <!-- Semanal 1 -->
+                <div class="weekly-leader">
+                    <div class="weekly-leader__image">
+                        {% thumbnail "experiencias/imagenes/weekly-carlos.webp" "200x200" crop="center" format="WEBP" quality=85 as w1 %}
+                            <img src="{{ w1.url }}" 
+                                 alt="Carlos R."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="weekly-leader__badge">🎭 Más divertido</span>
+                        <span class="weekly-leader__trending">🔥 En tendencia</span>
+                    </div>
+                    <div class="weekly-leader__body">
+                        <h3 class="weekly-leader__name">Carlos R.</h3>
+                        <p class="weekly-leader__votes"><i class="fas fa-thumbs-up"></i> 23 votos esta semana</p>
+                    </div>
+                </div>
+
+                <!-- Semanal 2 -->
+                <div class="weekly-leader">
+                    <div class="weekly-leader__image">
+                        {% thumbnail "experiencias/imagenes/weekly-laura.webp" "200x200" crop="center" format="WEBP" quality=85 as w2 %}
+                            <img src="{{ w2.url }}" 
+                                 alt="Laura M."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="weekly-leader__badge">🗣️ Más elocuente</span>
+                        <span class="weekly-leader__trending">🔥 En tendencia</span>
+                    </div>
+                    <div class="weekly-leader__body">
+                        <h3 class="weekly-leader__name">Laura M.</h3>
+                        <p class="weekly-leader__votes"><i class="fas fa-thumbs-up"></i> 19 votos esta semana</p>
+                    </div>
+                </div>
+
+                <!-- Semanal 3 -->
+                <div class="weekly-leader">
+                    <div class="weekly-leader__image">
+                        {% thumbnail "experiencias/imagenes/weekly-andres.webp" "200x200" crop="center" format="WEBP" quality=85 as w3 %}
+                            <img src="{{ w3.url }}" 
+                                 alt="Andrés F."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="weekly-leader__badge">❤️ Más fiel</span>
+                        <span class="weekly-leader__trending">🔥 En tendencia</span>
+                    </div>
+                    <div class="weekly-leader__body">
+                        <h3 class="weekly-leader__name">Andrés F.</h3>
+                        <p class="weekly-leader__votes"><i class="fas fa-thumbs-up"></i> 16 votos esta semana</p>
+                    </div>
+                </div>
+
+                <!-- Semanal 4 (Tablet+) -->
+                <div class="weekly-leader tablet-only">
+                    <div class="weekly-leader__image">
+                        {% thumbnail "experiencias/imagenes/weekly-maria.webp" "200x200" crop="center" format="WEBP" quality=85 as w4 %}
+                            <img src="{{ w4.url }}" 
+                                 alt="María C."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="weekly-leader__badge">⭐ Más talentoso</span>
+                        <span class="weekly-leader__trending">🔥 En tendencia</span>
+                    </div>
+                    <div class="weekly-leader__body">
+                        <h3 class="weekly-leader__name">María C.</h3>
+                        <p class="weekly-leader__votes"><i class="fas fa-thumbs-up"></i> 14 votos esta semana</p>
+                    </div>
+                </div>
+
+                <!-- Semanal 5 (Desktop) -->
+                <div class="weekly-leader desktop-only">
+                    <div class="weekly-leader__image">
+                        {% thumbnail "experiencias/imagenes/weekly-juan.webp" "200x200" crop="center" format="WEBP" quality=85 as w5 %}
+                            <img src="{{ w5.url }}" 
+                                 alt="Juan P."
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="weekly-leader__badge">🏆 El ganador</span>
+                        <span class="weekly-leader__trending">🔥 En tendencia</span>
+                    </div>
+                    <div class="weekly-leader__body">
+                        <h3 class="weekly-leader__name">Juan P.</h3>
+                        <p class="weekly-leader__votes"><i class="fas fa-thumbs-up"></i> 12 votos esta semana</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORÍAS DEL PODIO (VOTACIÓN)             -->
+    <!-- ============================================ -->
+    <section class="adventurers-categories" id="categorias">
+        <div class="container">
+            <div class="adventurers-categories__header">
+                <span class="section-tag">🗳️ Participa</span>
+                <h2 class="section-title">Vota por tu aventurero favorito</h2>
+                <p class="section-subtitle">
+                    Elige a los mejores en cada categoría. ¡Cada voto cuenta!
+                </p>
+            </div>
+
+            <div class="adventurers-categories__grid">
+                <!-- Categoría 1 -->
+                <div class="category-card">
+                    <div class="category-card__icon">🎭</div>
+                    <h3 class="category-card__title">Más divertido</h3>
+                    <p class="category-card__description">La persona que siempre tiene una sonrisa y contagia alegría.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="divertido">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">87 votos</span>
+                </div>
+
+                <!-- Categoría 2 -->
+                <div class="category-card">
+                    <div class="category-card__icon">🗣️</div>
+                    <h3 class="category-card__title">Más elocuente</h3>
+                    <p class="category-card__description">La persona que sabe expresarse y comunicar con pasión.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="elocuente">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">72 votos</span>
+                </div>
+
+                <!-- Categoría 3 -->
+                <div class="category-card">
+                    <div class="category-card__icon">❤️</div>
+                    <h3 class="category-card__title">Más fiel</h3>
+                    <p class="category-card__description">La persona que nunca falta a las actividades y siempre está presente.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="fiel">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">65 votos</span>
+                </div>
+
+                <!-- Categoría 4 -->
+                <div class="category-card">
+                    <div class="category-card__icon">⭐</div>
+                    <h3 class="category-card__title">Más talentoso</h3>
+                    <p class="category-card__description">La persona que tiene un don especial y lo comparte con la comunidad.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="talentoso">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">58 votos</span>
+                </div>
+
+                <!-- Categoría 5 (Tablet+) -->
+                <div class="category-card tablet-only">
+                    <div class="category-card__icon">🏆</div>
+                    <h3 class="category-card__title">El ganador</h3>
+                    <p class="category-card__description">La persona que siempre logra sus metas y gana las actividades.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="ganador">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">52 votos</span>
+                </div>
+
+                <!-- Categoría 6 (Tablet+) -->
+                <div class="category-card tablet-only">
+                    <div class="category-card__icon">⚡</div>
+                    <h3 class="category-card__title">Más enérgico</h3>
+                    <p class="category-card__description">La persona que tiene energía infinita y motiva a todos.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="energico">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">48 votos</span>
+                </div>
+
+                <!-- Categoría 7 (Desktop) -->
+                <div class="category-card desktop-only">
+                    <div class="category-card__icon">🤗</div>
+                    <h3 class="category-card__title">Más abrazable</h3>
+                    <p class="category-card__description">La persona más tierna y carismática, siempre con un abrazo.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="abrazable">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">41 votos</span>
+                </div>
+
+                <!-- Categoría 8 (Desktop) -->
+                <div class="category-card desktop-only">
+                    <div class="category-card__icon">🤝</div>
+                    <h3 class="category-card__title">Mejor amigo</h3>
+                    <p class="category-card__description">La persona que todos quieren tener como amigo, siempre dispuesta a escuchar.</p>
+                    <button class="btn btn--primary btn--small btn--vote-category" data-category="mejor-amigo">
+                        <i class="fas fa-thumbs-up"></i> Votar aquí
+                    </button>
+                    <span class="category-card__count">37 votos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- MI VOTO                                     -->
+    <!-- ============================================ -->
+    <section class="adventurers-my-vote" id="mi-voto">
+        <div class="container">
+            <div class="adventurers-my-vote__content">
+                <span class="section-tag">📋 Mi voto</span>
+                <h2 class="section-title">Tu participación</h2>
+                
+                <div class="adventurers-my-vote__list" id="myVoteList">
+                    <div class="my-vote-item">
+                        <span class="my-vote-item__icon">✅</span>
+                        <span class="my-vote-item__text"><strong>Más divertido</strong> → Carlos R.</span>
+                    </div>
+                    <div class="my-vote-item">
+                        <span class="my-vote-item__icon">✅</span>
+                        <span class="my-vote-item__text"><strong>Más elocuente</strong> → Laura M.</span>
+                    </div>
+                    <div class="my-vote-item">
+                        <span class="my-vote-item__icon">⏳</span>
+                        <span class="my-vote-item__text"><strong>Más fiel</strong> → Aún no has votado</span>
+                    </div>
+                </div>
+                
+                <div class="adventurers-my-vote__empty" id="myVoteEmpty" style="display: none;">
+                    <p><i class="fas fa-info-circle"></i> Aún no has votado en ninguna categoría. ¡Anímate y participa!</p>
+                </div>
+
+                <!-- NUEVO BOTÓN: VOTA -->
+                <div class="adventurers-my-vote__action">
+                    <a href="#categorias" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-thumbs-up"></i> Vota
+                    </a>
+                    <span class="adventurers-my-vote__hint">
+                        <i class="fas fa-arrow-up"></i> Ve a las categorías y elige a tus favoritos
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- BUSCADOR DE AVENTUREROS                     -->
+    <!-- ============================================ -->
+    <section class="adventurers-search" id="search">
+        <div class="container">
+            <div class="adventurers-search__header">
+                <span class="section-tag">🔍 Encuentra</span>
+                <h2 class="section-title">Conecta con otros aventureros</h2>
+                <p class="section-subtitle">
+                    Busca por nombre de usuario y conéctate con quienes compartiste una experiencia.
+                </p>
+            </div>
+
+            <div class="adventurers-search__form">
+                <div class="adventurers-search__field">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario..." class="adventurers-search__input">
+                    <button class="btn btn--primary btn--search" id="searchBtn">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+            </div>
+
+            <div class="adventurers-search__results" id="searchResults">
+                <!-- Resultados de búsqueda (dinámicos) -->
+                <div class="search-result">
+                    <!-- 
+                        NOTA: Foto del aventurero
+                        Dimensiones: 80x80 px
+                        Formato: WEBP
+                        Alt: Nombre del usuario
+                    -->
+                    {% thumbnail "experiencias/imagenes/search-user1.webp" "80x80" crop="center" format="WEBP" quality=85 as s1 %}
+                        <img src="{{ s1.url }}" 
+                             alt="Usuario1"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="search-result__avatar">
+                    {% endthumbnail %}
+                    <div class="search-result__info">
+                        <h4 class="search-result__name">@carlos_r</h4>
+                        <span class="search-result__status search-result__status--connected">Conectado</span>
+                    </div>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="carlos_r">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <div class="search-result">
+                    {% thumbnail "experiencias/imagenes/search-user2.webp" "80x80" crop="center" format="WEBP" quality=85 as s2 %}
+                        <img src="{{ s2.url }}" 
+                             alt="Usuario2"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="search-result__avatar">
+                    {% endthumbnail %}
+                    <div class="search-result__info">
+                        <h4 class="search-result__name">@laura_m</h4>
+                        <span class="search-result__status">Desconectado</span>
+                    </div>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="laura_m">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <div class="search-result">
+                    {% thumbnail "experiencias/imagenes/search-user3.webp" "80x80" crop="center" format="WEBP" quality=85 as s3 %}
+                        <img src="{{ s3.url }}" 
+                             alt="Usuario3"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="search-result__avatar">
+                    {% endthumbnail %}
+                    <div class="search-result__info">
+                        <h4 class="search-result__name">@andres_f</h4>
+                        <span class="search-result__status search-result__status--connected">Conectado</span>
+                    </div>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="andres_f">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <div class="search-result tablet-only">
+                    {% thumbnail "experiencias/imagenes/search-user4.webp" "80x80" crop="center" format="WEBP" quality=85 as s4 %}
+                        <img src="{{ s4.url }}" 
+                             alt="Usuario4"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="search-result__avatar">
+                    {% endthumbnail %}
+                    <div class="search-result__info">
+                        <h4 class="search-result__name">@maria_c</h4>
+                        <span class="search-result__status">Desconectado</span>
+                    </div>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="maria_c">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <div class="search-result desktop-only">
+                    {% thumbnail "experiencias/imagenes/search-user5.webp" "80x80" crop="center" format="WEBP" quality=85 as s5 %}
+                        <img src="{{ s5.url }}" 
+                             alt="Usuario5"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="search-result__avatar">
+                    {% endthumbnail %}
+                    <div class="search-result__info">
+                        <h4 class="search-result__name">@juan_p</h4>
+                        <span class="search-result__status search-result__status--connected">Conectado</span>
+                    </div>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="juan_p">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+            </div>
+
+            <div class="adventurers-search__pagination" id="searchPagination">
+                <button class="pagination-btn pagination-btn--prev" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="pagination-btn pagination-btn--active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn pagination-btn--next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- AVENTUREROS DESTACADOS                      -->
+    <!-- ============================================ -->
+    <section class="adventurers-featured" id="destacados">
+        <div class="container">
+            <div class="adventurers-featured__header">
+                <span class="section-tag">🌟 Conoce más</span>
+                <h2 class="section-title">Aventureros destacados</h2>
+                <p class="section-subtitle">
+                    Conoce a otros miembros de la tribu y amplía tu red de conexiones.
+                </p>
+            </div>
+
+            <div class="adventurers-featured__grid" id="featuredGrid">
+                <!-- Destacado 1 -->
+                <div class="featured-card">
+                    {% thumbnail "experiencias/imagenes/featured-user1.webp" "150x150" crop="center" format="WEBP" quality=85 as f1 %}
+                        <img src="{{ f1.url }}" 
+                             alt="@sofia_m"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@sofia_m</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="sofia_m">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 2 -->
+                <div class="featured-card">
+                    {% thumbnail "experiencias/imagenes/featured-user2.webp" "150x150" crop="center" format="WEBP" quality=85 as f2 %}
+                        <img src="{{ f2.url }}" 
+                             alt="@juan_c"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@juan_c</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="juan_c">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 3 -->
+                <div class="featured-card">
+                    {% thumbnail "experiencias/imagenes/featured-user3.webp" "150x150" crop="center" format="WEBP" quality=85 as f3 %}
+                        <img src="{{ f3.url }}" 
+                             alt="@ana_g"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@ana_g</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="ana_g">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 4 (Tablet+) -->
+                <div class="featured-card tablet-only">
+                    {% thumbnail "experiencias/imagenes/featured-user4.webp" "150x150" crop="center" format="WEBP" quality=85 as f4 %}
+                        <img src="{{ f4.url }}" 
+                             alt="@diego_r"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@diego_r</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="diego_r">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 5 (Tablet+) -->
+                <div class="featured-card tablet-only">
+                    {% thumbnail "experiencias/imagenes/featured-user5.webp" "150x150" crop="center" format="WEBP" quality=85 as f5 %}
+                        <img src="{{ f5.url }}" 
+                             alt="@lucia_v"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@lucia_v</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="lucia_v">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 6 (Desktop) -->
+                <div class="featured-card desktop-only">
+                    {% thumbnail "experiencias/imagenes/featured-user6.webp" "150x150" crop="center" format="WEBP" quality=85 as f6 %}
+                        <img src="{{ f6.url }}" 
+                             alt="@mateo_s"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@mateo_s</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="mateo_s">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 7 (Desktop) -->
+                <div class="featured-card desktop-only">
+                    {% thumbnail "experiencias/imagenes/featured-user7.webp" "150x150" crop="center" format="WEBP" quality=85 as f7 %}
+                        <img src="{{ f7.url }}" 
+                             alt="@valentina_m"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@valentina_m</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="valentina_m">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+
+                <!-- Destacado 8 (Desktop) -->
+                <div class="featured-card desktop-only">
+                    {% thumbnail "experiencias/imagenes/featured-user8.webp" "150x150" crop="center" format="WEBP" quality=85 as f8 %}
+                        <img src="{{ f8.url }}" 
+                             alt="@camilo_g"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="featured-card__avatar">
+                    {% endthumbnail %}
+                    <h4 class="featured-card__name">@camilo_g</h4>
+                    <button class="btn btn--secondary btn--small btn--connect" data-user="camilo_g">
+                        <i class="fas fa-user-plus"></i> Conectar
+                    </button>
+                </div>
+            </div>
+
+            <div class="adventurers-featured__cta">
+                <button class="btn btn--secondary btn--outline" id="loadMoreFeatured">
+                    <i class="fas fa-plus"></i> Ver más aventureros
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- GANADORES DE EXPERIENCIA                    -->
+    <!-- ============================================ -->
+    <section class="adventurers-winners" id="ganadores">
+        <div class="container">
+            <div class="adventurers-winners__header">
+                <span class="section-tag">🎉 Celebración</span>
+                <h2 class="section-title">Ganadores de experiencia</h2>
+                <p class="section-subtitle">
+                    Estos aventureros se ganaron una experiencia increíble. ¡La próxima podría ser tú!
+                </p>
+            </div>
+
+            <div class="adventurers-winners__grid">
+                <!-- Ganador 1 -->
+                <div class="winner-card">
+                    {% thumbnail "experiencias/imagenes/winner1.webp" "200x200" crop="center" format="WEBP" quality=85 as win1 %}
+                        <img src="{{ win1.url }}" 
+                             alt="Carlos R."
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="winner-card__image">
+                    {% endthumbnail %}
+                    <div class="winner-card__body">
+                        <span class="winner-card__badge">🏆 Ganador</span>
+                        <h3 class="winner-card__name">Carlos R.</h3>
+                        <p class="winner-card__prize"><i class="fas fa-gift"></i> Viaje a la montaña</p>
+                        <p class="winner-card__date"><i class="far fa-calendar"></i> Agosto 2026</p>
+                    </div>
+                </div>
+
+                <!-- Ganador 2 -->
+                <div class="winner-card">
+                    {% thumbnail "experiencias/imagenes/winner2.webp" "200x200" crop="center" format="WEBP" quality=85 as win2 %}
+                        <img src="{{ win2.url }}" 
+                             alt="Laura M."
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="winner-card__image">
+                    {% endthumbnail %}
+                    <div class="winner-card__body">
+                        <span class="winner-card__badge">🏆 Ganador</span>
+                        <h3 class="winner-card__name">Laura M.</h3>
+                        <p class="winner-card__prize"><i class="fas fa-gift"></i> Taller de creatividad</p>
+                        <p class="winner-card__date"><i class="far fa-calendar"></i> Julio 2026</p>
+                    </div>
+                </div>
+
+                <!-- Ganador 3 -->
+                <div class="winner-card">
+                    {% thumbnail "experiencias/imagenes/winner3.webp" "200x200" crop="center" format="WEBP" quality=85 as win3 %}
+                        <img src="{{ win3.url }}" 
+                             alt="Andrés F."
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="winner-card__image">
+                    {% endthumbnail %}
+                    <div class="winner-card__body">
+                        <span class="winner-card__badge">🏆 Ganador</span>
+                        <h3 class="winner-card__name">Andrés F.</h3>
+                        <p class="winner-card__prize"><i class="fas fa-gift"></i> Retiro de coraje</p>
+                        <p class="winner-card__date"><i class="far fa-calendar"></i> Junio 2026</p>
+                    </div>
+                </div>
+
+                <!-- Ganador 4 (Tablet+) -->
+                <div class="winner-card tablet-only">
+                    {% thumbnail "experiencias/imagenes/winner4.webp" "200x200" crop="center" format="WEBP" quality=85 as win4 %}
+                        <img src="{{ win4.url }}" 
+                             alt="María C."
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="winner-card__image">
+                    {% endthumbnail %}
+                    <div class="winner-card__body">
+                        <span class="winner-card__badge">🏆 Ganador</span>
+                        <h3 class="winner-card__name">María C.</h3>
+                        <p class="winner-card__prize"><i class="fas fa-gift"></i> Experiencia de viaje</p>
+                        <p class="winner-card__date"><i class="far fa-calendar"></i> Mayo 2026</p>
+                    </div>
+                </div>
+
+                <!-- Ganador 5 (Desktop) -->
+                <div class="winner-card desktop-only">
+                    {% thumbnail "experiencias/imagenes/winner5.webp" "200x200" crop="center" format="WEBP" quality=85 as win5 %}
+                        <img src="{{ win5.url }}" 
+                             alt="Juan P."
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="winner-card__image">
+                    {% endthumbnail %}
+                    <div class="winner-card__body">
+                        <span class="winner-card__badge">🏆 Ganador</span>
+                        <h3 class="winner-card__name">Juan P.</h3>
+                        <p class="winner-card__prize"><i class="fas fa-gift"></i> Charla inspiradora</p>
+                        <p class="winner-card__date"><i class="far fa-calendar"></i> Abril 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ENLACE AL FORO                              -->
+    <!-- ============================================ -->
+    <section class="adventurers-forum" id="foro-link">
+        <div class="container">
+            <div class="adventurers-forum__content">
+                <div class="adventurers-forum__icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="adventurers-forum__text">
+                    <h3>¿Quieres conversar con la tribu?</h3>
+                    <p>Únete a las conversaciones, comparte tus experiencias y conecta con otros aventureros en nuestro foro.</p>
+                </div>
+                <a href="#" class="btn btn--primary btn--pulse">
+                    <i class="fas fa-arrow-right"></i> Ve a nuestro foro
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                      -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                    <p class="footer__tagline">Dare to begin. Together.</p>
+                    <div class="footer__social">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="{% url 'experiencias:experiencias' %}">Experiencias</a></li>
+                        <li><a href="{% url 'experiencias:comunidad' %}">Comunidad</a></li>
+                        <li><a href="{% url 'experiencias:home' %}">The Lore</a></li>
+                        <li><a href="{% url 'experiencias:sobre_mi' %}">Sobre mí</a></li>
+                        <li><a href="{% url 'experiencias:aventureros' %}">Aventureros</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos</a></li>
+                    </ul>
+                </div>
+                <div class="footer__badge">
+                    <div class="footer__community-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Orgullosa miembro del <strong>First Timer's Club</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Lorena Vásquez. Todos los derechos reservados. Hecho con ❤️ y valentía.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT                                  -->
+    <!-- ============================================ -->
+    <script>
+        // ==========================================
+        // MOBILE MENU TOGGLE
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ==========================================
+        // VOTAR POR CATEGORÍA (Simulación)
+        // ==========================================
+        (function() {
+            const voteButtons = document.querySelectorAll('.btn--vote-category');
+            
+            voteButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    const card = this.closest('.category-card');
+                    const countSpan = card.querySelector('.category-card__count');
+                    
+                    // Simular aumento de votos
+                    let currentCount = parseInt(countSpan.textContent);
+                    if (isNaN(currentCount)) currentCount = 0;
+                    
+                    if (this.classList.contains('voted')) {
+                        alert(`Ya votaste por esta categoría.`);
+                        return;
+                    }
+                    
+                    // Marcar como votado
+                    this.classList.add('voted');
+                    this.innerHTML = '<i class="fas fa-check"></i> Votaste';
+                    this.style.background = 'var(--color-teal)';
+                    
+                    // Aumentar contador
+                    const newCount = currentCount + 1;
+                    countSpan.textContent = `${newCount} votos`;
+                    
+                    // Actualizar "Mi Voto"
+                    const categoryName = card.querySelector('.category-card__title').textContent;
+                    const voterName = 'Tú'; // Simulación
+                    updateMyVote(categoryName, voterName);
+                    
+                    // Feedback
+                    showToast(`¡Votaste por "${categoryName}"!`);
+                });
+            });
+            
+            function updateMyVote(category, voter) {
+                const list = document.getElementById('myVoteList');
+                if (!list) return;
+                
+                // Buscar si ya existe esa categoría en "Mi Voto"
+                const items = list.querySelectorAll('.my-vote-item');
+                let found = false;
+                
+                items.forEach(item => {
+                    if (item.textContent.includes(category)) {
+                        item.innerHTML = `
+                            <span class="my-vote-item__icon">✅</span>
+                            <span class="my-vote-item__text"><strong>${category}</strong> → ${voter}</span>
+                        `;
+                        found = true;
+                    }
+                });
+                
+                if (!found) {
+                    const newItem = document.createElement('div');
+                    newItem.className = 'my-vote-item';
+                    newItem.innerHTML = `
+                        <span class="my-vote-item__icon">✅</span>
+                        <span class="my-vote-item__text"><strong>${category}</strong> → ${voter}</span>
+                    `;
+                    list.appendChild(newItem);
+                }
+                
+                // Ocultar mensaje de vacío
+                const empty = document.getElementById('myVoteEmpty');
+                if (empty) empty.style.display = 'none';
+            }
+            
+            function showToast(message) {
+                // Crear toast simple
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-charcoal);
+                    color: var(--color-white);
+                    padding: 12px 24px;
+                    border-radius: var(--radius-full);
+                    font-family: var(--font-body);
+                    font-size: 0.95rem;
+                    z-index: 9999;
+                    box-shadow: var(--shadow-lg);
+                    animation: fadeInUp 0.3s ease;
+                    max-width: 90%;
+                    text-align: center;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Añadir animación para el toast
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translate(-50%, 20px); }
+                    to { opacity: 1; transform: translate(-50%, 0); }
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+
+        // ==========================================
+        // BUSCADOR DE AVENTUREROS
+        // ==========================================
+        (function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const resultsContainer = document.getElementById('searchResults');
+            const paginationContainer = document.getElementById('searchPagination');
+            
+            if (!searchInput || !searchBtn || !resultsContainer) return;
+            
+            function performSearch(query) {
+                // Simulación de búsqueda
+                const results = resultsContainer.querySelectorAll('.search-result');
+                let visibleCount = 0;
+                
+                results.forEach(result => {
+                    const name = result.querySelector('.search-result__name')?.textContent || '';
+                    if (name.toLowerCase().includes(query.toLowerCase())) {
+                        result.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        result.style.display = 'none';
+                    }
+                });
+                
+                // Mostrar mensaje si no hay resultados
+                let noResults = resultsContainer.querySelector('.no-results');
+                if (visibleCount === 0) {
+                    if (!noResults) {
+                        noResults = document.createElement('p');
+                        noResults.className = 'no-results';
+                        noResults.textContent = 'No se encontraron aventureros con ese nombre.';
+                        noResults.style.cssText = `
+                            text-align: center;
+                            padding: var(--spacing-md);
+                            color: var(--color-gray);
+                            grid-column: 1 / -1;
+                        `;
+                        resultsContainer.appendChild(noResults);
+                    }
+                } else {
+                    if (noResults) noResults.remove();
+                }
+                
+                // Actualizar paginación
+                if (paginationContainer) {
+                    const totalPages = Math.ceil(visibleCount / 4);
+                    if (totalPages <= 1) {
+                        paginationContainer.style.display = 'none';
+                    } else {
+                        paginationContainer.style.display = 'flex';
+                        // Actualizar números de página (simplificado)
+                        const pageButtons = paginationContainer.querySelectorAll('.pagination-btn:not(.pagination-btn--prev):not(.pagination-btn--next)');
+                        pageButtons.forEach((btn, index) => {
+                            if (index < totalPages) {
+                                btn.style.display = 'inline-flex';
+                                btn.textContent = index + 1;
+                            } else {
+                                btn.style.display = 'none';
+                            }
+                        });
+                    }
+                }
+            }
+            
+            searchBtn.addEventListener('click', function() {
+                performSearch(searchInput.value);
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+            
+            // Paginación (simulación)
+            if (paginationContainer) {
+                const pageButtons = paginationContainer.querySelectorAll('.pagination-btn');
+                pageButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (this.classList.contains('pagination-btn--prev') || 
+                            this.classList.contains('pagination-btn--next')) {
+                            return;
+                        }
+                        pageButtons.forEach(b => b.classList.remove('pagination-btn--active'));
+                        this.classList.add('pagination-btn--active');
+                    });
+                });
+            }
+        })();
+
+        // ==========================================
+        // CONECTAR CON AVENTUREROS
+        // ==========================================
+        (function() {
+            const connectButtons = document.querySelectorAll('.btn--connect');
+            
+            connectButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const username = this.dataset.user || 'aventurero';
+                    const status = this.closest('.search-result')?.querySelector('.search-result__status');
+                    
+                    if (this.classList.contains('connected')) {
+                        alert(`Ya estás conectado con ${username}`);
+                        return;
+                    }
+                    
+                    this.classList.add('connected');
+                    this.innerHTML = '<i class="fas fa-check"></i> Conectado';
+                    this.style.background = 'var(--color-teal)';
+                    this.style.borderColor = 'var(--color-teal)';
+                    this.style.color = 'var(--color-white)';
+                    
+                    if (status) {
+                        status.textContent = 'Conectado';
+                        status.className = 'search-result__status search-result__status--connected';
+                    }
+                    
+                    showToast(`¡Conectaste con ${username}!`);
+                });
+            });
+            
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-charcoal);
+                    color: var(--color-white);
+                    padding: 12px 24px;
+                    border-radius: var(--radius-full);
+                    font-family: var(--font-body);
+                    font-size: 0.95rem;
+                    z-index: 9999;
+                    box-shadow: var(--shadow-lg);
+                    animation: fadeInUp 0.3s ease;
+                    max-width: 90%;
+                    text-align: center;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 3000);
+            }
+        })();
+
+        // ==========================================
+        // VER MÁS AVENTUREROS DESTACADOS
+        // ==========================================
+        (function() {
+            const loadBtn = document.getElementById('loadMoreFeatured');
+            if (!loadBtn) return;
+            
+            loadBtn.addEventListener('click', function() {
+                const grid = document.getElementById('featuredGrid');
+                const hiddenCards = grid.querySelectorAll('.featured-card.desktop-only, .featured-card.tablet-only');
+                
+                let loaded = 0;
+                hiddenCards.forEach(card => {
+                    if (card.style.display !== 'flex' || !card.style.display) {
+                        card.style.display = 'flex';
+                        loaded++;
+                    }
+                });
+                
+                if (loaded === 0) {
+                    this.textContent = 'No hay más aventureros';
+                    this.disabled = true;
+                    this.style.opacity = '0.5';
+                } else {
+                    showToast(`Cargados ${loaded} aventureros más`);
+                }
+            });
+            
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-charcoal);
+                    color: var(--color-white);
+                    padding: 12px 24px;
+                    border-radius: var(--radius-full);
+                    font-family: var(--font-body);
+                    font-size: 0.95rem;
+                    z-index: 9999;
+                    box-shadow: var(--shadow-lg);
+                    animation: fadeInUp 0.3s ease;
+                    max-width: 90%;
+                    text-align: center;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 3000);
+            }
+        })();
+
+        // ==========================================
+        // EFECTO DE SCROLL SUAVE PARA ENLACES
+        // ==========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

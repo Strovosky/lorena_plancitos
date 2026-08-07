@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db.models import EmailField, CharField, TextField, ImageField, DateTimeField, BooleanField
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
+from .validators import validar_peso, validar_dimesiones_max
 from PIL import Image
 
 # Create your models here.
@@ -79,7 +80,7 @@ class Aventurero(AbstractBaseUser, PermissionsMixin):
     bio = TextField(max_length=500, null=True, blank=True, help_text="Cuénta un poco de ti.")
     motto = CharField(max_length=200, help_text="La frase que te define.", null=True, blank=True)
     profesion = CharField(_('profesión'), max_length=100, null=True, blank=True)
-    foto = ImageField(_('foto'), default="default_imagen.png", upload_to="imagenes_perfil")
+    foto = ImageField(_('foto'), default="default_imagen.png", validators=[validar_dimesiones_max, validar_peso], upload_to="imagenes_perfil")
 
     USERNAME_FIELD = "correo"
 

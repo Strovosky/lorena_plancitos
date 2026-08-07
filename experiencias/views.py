@@ -1,6 +1,7 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.shortcuts import render
 from .models import Experiencia
+from aventurero.models import Aventurero
 
 # Create your views here.
 
@@ -25,4 +26,27 @@ class SobreMi(TemplateView):
         context["experiencias"] = Experiencia.objects.all()[:5]
         return context
 
+class Experiencias_View(ListView):
+    "Este view mostrara la pagina experiencias"
+
+    template_name = 'experiencias/experiencias.html'
+    model = Experiencia
+
+class Comunidad_View(ListView):
+    "Este view mostrará la página comunidad"
+
+    template_name = 'experiencias/comunidad.html'
+    model = Experiencia
+
+class Aventurero_View(ListView):
+    "Esta vista mostrará los aventureros registrados"
+
+    template_name = 'experiencias/aventureros.html'
+    model = Aventurero
+
+class Votacion_View(ListView):
+    "Esta vista mostrará la pagina donde se votara por un aventurero."
+
+    template_name = 'experiencias/votaciones.html'
+    model = Aventurero
         

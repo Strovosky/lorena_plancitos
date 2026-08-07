@@ -1,7 +1,7 @@
-from django.db.models import Model, CharField, DateTimeField, TextField, ImageField
+from django.db.models import Model, CharField, DateTimeField, TextField, ImageField, IntegerField
 from django.utils.translation import gettext_lazy as _
 from django.core.files.base import ContentFile
-from .validators import validar_tamaño_archivo
+from .validators import validar_tamaño_archivo, validar_precio_maximo
 from PIL import Image
 import os
 from io import BytesIO
@@ -33,6 +33,7 @@ class Experiencia(Model):
     ciudad = CharField(_('ciudad'), max_length=100)
     direccion = CharField(_('dirección'), max_length=200, blank=True, null=True)
     establecimiento = CharField(_('establecimiento'), max_length=150, blank=True, null=True)
+    precio = IntegerField(_('precio'), validators=[validar_precio_maximo], default=0)
     foto = ImageField(
         _('foto'),
         default='experiencia_generica.webp',

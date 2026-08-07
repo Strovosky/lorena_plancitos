@@ -1,0 +1,1708 @@
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiencias — Lorena Vásquez</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'experiencias/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'experiencias/lore_favicon.ico' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'experiencias/lore_favicon.svg' %}">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / NAVIGATION                          -->
+    <!-- ============================================ -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <a href="{% url 'experiencias:home' %}">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                </a>
+            </div>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav__menu" id="navMenu">
+                <li><a href="{% url 'experiencias:experiencias' %}" class="nav__link nav__link--active">Experiencias</a></li>
+                <li><a href="{% url 'experiencias:comunidad' %}#comunidad" class="nav__link">Comunidad</a></li>
+                <li><a href="{% url 'experiencias:home' %}#lore" class="nav__link">The Lore</a></li>
+                <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link">Sobre Mí</a></li>
+                <li><a href="{% url 'experiencias:home' %}#contact" class="nav__link nav__link--cta">Únete a la Aventura</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO SECTION                                -->
+    <!-- ============================================ -->
+    <section class="experiences-hero" id="hero">
+        <div class="experiences-hero__container container">
+            <div class="experiences-hero__content">
+                <span class="experiences-hero__badge">🗺️ Tu próxima aventura te espera</span>
+                <h1 class="experiences-hero__title">
+                    Elige tu próxima <span class="highlight">primera vez</span>
+                </h1>
+                <p class="experiences-hero__description">
+                    Cada experiencia está diseñada para transformar un "primer paso" 
+                    en un recuerdo compartido con nuestra comunidad.
+                </p>
+                <div class="experiences-hero__actions">
+                    <a href="#calendar" class="btn btn--primary btn--pulse">
+                        <i class="fas fa-calendar-alt"></i> Ver calendario
+                    </a>
+                    <a href="#experiences-grid" class="btn btn--secondary">
+                        <i class="fas fa-th"></i> Ver cuadrícula
+                    </a>
+                </div>
+            </div>
+            <div class="experiences-hero__image desktop-only">
+                <!-- 
+                    NOTA: Imagen de fondo para el hero de experiencias
+                    Dimensiones: 600x400 px
+                    Formato: WEBP
+                    Alt: Varias personas en una experiencia de Lorena
+                -->
+                {% thumbnail "experiencias/imagenes/experiences-hero.webp" "600x400" crop="center" format="WEBP" quality=85 as hero %}
+                    <img src="{{ hero.url }}" 
+                         alt="Personas en una experiencia de Lorena"
+                         width="" 
+                         height=""
+                         loading="eager">
+                {% endthumbnail %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FILTROS Y BÚSQUEDA                          -->
+    <!-- ============================================ -->
+    <section class="experiences-filters" id="filters">
+        <div class="container">
+            <div class="experiences-filters__container">
+                <div class="experiences-filters__group">
+                    <span class="experiences-filters__label"><i class="fas fa-tag"></i> Tipo:</span>
+                    <div class="experiences-filters__buttons" id="filterType">
+                        <button class="filter-btn filter-btn--active" data-filter="all">Todos</button>
+                        <button class="filter-btn" data-filter="taller">Talleres</button>
+                        <button class="filter-btn" data-filter="retiro">Retiros</button>
+                        <button class="filter-btn" data-filter="viaje">Viajes</button>
+                        <button class="filter-btn" data-filter="virtual">Virtuales</button>
+                        <button class="filter-btn" data-filter="charla">Charlas</button>
+                    </div>
+                </div>
+                <div class="experiences-filters__actions">
+                    <div class="experiences-filters__search">
+                        <input type="text" id="searchInput" placeholder="Buscar experiencia..." class="experiences-filters__input">
+                        <i class="fas fa-search experiences-filters__search-icon"></i>
+                    </div>
+                    <div class="experiences-filters__view-toggle">
+                        <button class="view-btn view-btn--active" data-view="grid" aria-label="Vista de cuadrícula">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="calendar" aria-label="Vista de calendario">
+                            <i class="fas fa-calendar-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="experiences-filters__counter" id="resultsCounter">
+                    Mostrando <span id="resultsCount">0</span> experiencias
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CALENDARIO MENSUAL (Desktop/Tablet)         -->
+    <!-- ============================================ -->
+    <section class="calendar-section" id="calendar">
+        <div class="container">
+            <div class="calendar-section__header">
+                <h2 class="section-title">Calendario de experiencias</h2>
+                <div class="calendar-section__nav">
+                    <button class="calendar-nav" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <span class="calendar-month" id="currentMonth">Agosto 2026</span>
+                    <button class="calendar-nav" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Vista de Calendario (Desktop/Tablet) -->
+            <div class="calendar-view" id="calendarView">
+                <div class="calendar-grid">
+                    <!-- Días de la semana -->
+                    <div class="calendar-weekday">Lun</div>
+                    <div class="calendar-weekday">Mar</div>
+                    <div class="calendar-weekday">Mié</div>
+                    <div class="calendar-weekday">Jue</div>
+                    <div class="calendar-weekday">Vie</div>
+                    <div class="calendar-weekday">Sáb</div>
+                    <div class="calendar-weekday">Dom</div>
+                    <!-- Los días se generan con JavaScript -->
+                </div>
+                <div class="calendar-legend">
+                    <span><span class="legend-dot" style="background: var(--color-orange);"></span> Taller</span>
+                    <span><span class="legend-dot" style="background: var(--color-purple);"></span> Retiro</span>
+                    <span><span class="legend-dot" style="background: var(--color-teal);"></span> Viaje</span>
+                    <span><span class="legend-dot" style="background: var(--color-yellow);"></span> Charla</span>
+                    <span><span class="legend-dot" style="background: #999;"></span> Virtual</span>
+                </div>
+            </div>
+
+            <!-- Vista de Carrusel Semanal (Mobile) -->
+            <div class="calendar-carousel" id="calendarCarousel">
+                <div class="carousel-container">
+                    <button class="carousel-btn carousel-btn--prev" id="carouselPrev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Las semanas se generan con JavaScript -->
+                    </div>
+                    <button class="carousel-btn carousel-btn--next" id="carouselNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- GRID DE EXPERIENCIAS                        -->
+    <!-- ============================================ -->
+    <section class="experiences-grid-section" id="experiences-grid">
+        <div class="container">
+            <div class="experiences-grid-section__header">
+                <span class="section-tag">✨ Todas las experiencias</span>
+                <h2 class="section-title">Encuentra tu próxima aventura</h2>
+            </div>
+
+            <div class="experiences-grid" id="experiencesGrid">
+                <!-- Experiencia 1 -->
+                <article class="experience-card" data-type="taller" data-title="Taller de Creatividad">
+                    <div class="experience-card__image">
+                        <!-- 
+                            NOTA: Imagen de la experiencia
+                            Dimensiones: 800x500 px
+                            Formato: WEBP
+                            Alt: Taller de Creatividad con Lorena
+                        -->
+                        {% thumbnail "experiencias/imagenes/experiencia-creatividad.webp" "800x500" crop="center" format="WEBP" quality=85 as exp1 %}
+                            <img src="{{ exp1.url }}" 
+                                 alt="Taller de Creatividad con Lorena"
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="experience-card__badge">🔥 Nuevo</span>
+                        <div class="experience-card__links">
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Taller de Creatividad</h3>
+                        <p class="experience-card__description">
+                            Desbloquea tu potencial creativo a través de ejercicios guiados y colaboración en grupo.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> 15 - 17 Ago</span>
+                            <span><i class="far fa-clock"></i> 3 días</span>
+                            <span><i class="fas fa-users"></i> 12 plazas</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$297</span>
+                            <button class="btn btn--secondary btn--small btn--detail" data-experience="1">Ver más</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Experiencia 2 -->
+                <article class="experience-card" data-type="viaje" data-title="Viaje de Exploración">
+                    <div class="experience-card__image">
+                        <!-- 
+                            NOTA: Imagen de la experiencia
+                            Dimensiones: 800x500 px
+                            Formato: WEBP
+                            Alt: Viaje de Exploración con Lorena
+                        -->
+                        {% thumbnail "experiencias/imagenes/experiencia-viaje.webp" "800x500" crop="center" format="WEBP" quality=85 as exp2 %}
+                            <img src="{{ exp2.url }}" 
+                                 alt="Viaje de Exploración con Lorena"
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="experience-card__badge">🌍 Bestseller</span>
+                        <div class="experience-card__links">
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Viaje de Exploración</h3>
+                        <p class="experience-card__description">
+                            Supera el miedo a viajar solo con un grupo de apoyo y la guía de Lorena.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> 5 - 12 Sep</span>
+                            <span><i class="far fa-clock"></i> 7 días</span>
+                            <span><i class="fas fa-users"></i> 8 plazas</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$1,197</span>
+                            <button class="btn btn--secondary btn--small btn--detail" data-experience="2">Ver más</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Experiencia 3 -->
+                <article class="experience-card tablet-only" data-type="retiro" data-title="Retiro de Coraje">
+                    <div class="experience-card__image">
+                        <!-- 
+                            NOTA: Imagen de la experiencia
+                            Dimensiones: 800x500 px
+                            Formato: WEBP
+                            Alt: Retiro de Coraje con Lorena
+                        -->
+                        {% thumbnail "experiencias/imagenes/experiencia-retiro.webp" "800x500" crop="center" format="WEBP" quality=85 as exp3 %}
+                            <img src="{{ exp3.url }}" 
+                                 alt="Retiro de Coraje con Lorena"
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="experience-card__badge">💫 Últimas plazas</span>
+                        <div class="experience-card__links">
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Retiro de Coraje</h3>
+                        <p class="experience-card__description">
+                            Enfrenta tus miedos y construye el valor para perseguir tus sueños más audaces.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> 2 - 3 Oct</span>
+                            <span><i class="far fa-clock"></i> 2 días</span>
+                            <span><i class="fas fa-users"></i> 15 plazas</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$197</span>
+                            <button class="btn btn--secondary btn--small btn--detail" data-experience="3">Ver más</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Experiencia 4 (Solo desktop) -->
+                <article class="experience-card desktop-only" data-type="charla" data-title="Charla Inspiradora">
+                    <div class="experience-card__image">
+                        <!-- 
+                            NOTA: Imagen de la experiencia
+                            Dimensiones: 800x500 px
+                            Formato: WEBP
+                            Alt: Charla Inspiradora con Lorena
+                        -->
+                        {% thumbnail "experiencias/imagenes/experiencia-charla.webp" "800x500" crop="center" format="WEBP" quality=85 as exp4 %}
+                            <img src="{{ exp4.url }}" 
+                                 alt="Charla Inspiradora con Lorena"
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="experience-card__badge">🎙️ Nueva</span>
+                        <div class="experience-card__links">
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Charla Inspiradora</h3>
+                        <p class="experience-card__description">
+                            Una charla íntima sobre el poder de las "primeras veces" y cómo empezar tu propia aventura.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> 10 Oct</span>
+                            <span><i class="far fa-clock"></i> 2 horas</span>
+                            <span><i class="fas fa-users"></i> 30 plazas</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$47</span>
+                            <button class="btn btn--secondary btn--small btn--detail" data-experience="4">Ver más</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Experiencia 5 (Solo desktop) -->
+                <article class="experience-card desktop-only" data-type="virtual" data-title="Taller Virtual">
+                    <div class="experience-card__image">
+                        <!-- 
+                            NOTA: Imagen de la experiencia
+                            Dimensiones: 800x500 px
+                            Formato: WEBP
+                            Alt: Taller Virtual con Lorena
+                        -->
+                        {% thumbnail "experiencias/imagenes/experiencia-virtual.webp" "800x500" crop="center" format="WEBP" quality=85 as exp5 %}
+                            <img src="{{ exp5.url }}" 
+                                 alt="Taller Virtual con Lorena"
+                                 width="" 
+                                 height=""
+                                 loading="lazy">
+                        {% endthumbnail %}
+                        <span class="experience-card__badge">💻 Online</span>
+                        <div class="experience-card__links">
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Ver en TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card__body">
+                        <h3 class="experience-card__title">Taller Virtual</h3>
+                        <p class="experience-card__description">
+                            Aprende a dar tu primer paso desde la comodidad de tu hogar, con el apoyo de la comunidad.
+                        </p>
+                        <div class="experience-card__meta">
+                            <span><i class="far fa-calendar"></i> 15 Oct</span>
+                            <span><i class="far fa-clock"></i> 3 horas</span>
+                            <span><i class="fas fa-users"></i> 20 plazas</span>
+                        </div>
+                        <div class="experience-card__footer">
+                            <span class="experience-card__price">$97</span>
+                            <button class="btn btn--secondary btn--small btn--detail" data-experience="5">Ver más</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="experiences-grid-section__cta">
+                <button class="btn btn--primary" id="loadMoreBtn">
+                    <i class="fas fa-plus"></i> Cargar más experiencias
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PRÓXIMAS EXPERIENCIAS (Este fin de semana)  -->
+    <!-- ============================================ -->
+    <section class="upcoming" id="upcoming">
+        <div class="container">
+            <div class="upcoming__header">
+                <span class="section-tag">🔥 Este fin de semana</span>
+                <h2 class="section-title">Próximas experiencias</h2>
+                <p class="section-subtitle">Plazas limitadas. ¡Asegura tu lugar!</p>
+            </div>
+
+            <div class="upcoming__carousel" id="upcomingCarousel">
+                <div class="upcoming__track" id="upcomingTrack">
+                    <!-- Tarjeta 1 -->
+                    <div class="upcoming-card">
+                        <!-- 
+                            NOTA: Imagen de la experiencia destacada
+                            Dimensiones: 400x250 px
+                            Formato: WEBP
+                            Alt: Taller de Creatividad (destacado)
+                        -->
+                        {% thumbnail "experiencias/imagenes/upcoming-1.webp" "400x250" crop="center" format="WEBP" quality=85 as up1 %}
+                            <img src="{{ up1.url }}" 
+                                 alt="Taller de Creatividad"
+                                 width="" 
+                                 height=""
+                                 loading="lazy"
+                                 class="upcoming-card__image">
+                        {% endthumbnail %}
+                        <div class="upcoming-card__body">
+                            <span class="upcoming-card__badge">🔥 ¡Solo 12 plazas!</span>
+                            <h3 class="upcoming-card__title">Taller de Creatividad</h3>
+                            <p class="upcoming-card__date"><i class="far fa-calendar"></i> 15 - 17 Ago</p>
+                            <a href="#" class="btn btn--primary btn--small btn--full">Reservar ahora</a>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2 (Tablet+) -->
+                    <div class="upcoming-card tablet-only">
+                        <!-- 
+                            NOTA: Imagen de la experiencia destacada
+                            Dimensiones: 400x250 px
+                            Formato: WEBP
+                            Alt: Viaje de Exploración (destacado)
+                        -->
+                        {% thumbnail "experiencias/imagenes/upcoming-2.webp" "400x250" crop="center" format="WEBP" quality=85 as up2 %}
+                            <img src="{{ up2.url }}" 
+                                 alt="Viaje de Exploración"
+                                 width="" 
+                                 height=""
+                                 loading="lazy"
+                                 class="upcoming-card__image">
+                        {% endthumbnail %}
+                        <div class="upcoming-card__body">
+                            <span class="upcoming-card__badge">🌍 ¡Solo 8 plazas!</span>
+                            <h3 class="upcoming-card__title">Viaje de Exploración</h3>
+                            <p class="upcoming-card__date"><i class="far fa-calendar"></i> 5 - 12 Sep</p>
+                            <a href="#" class="btn btn--primary btn--small btn--full">Reservar ahora</a>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3 (Desktop) -->
+                    <div class="upcoming-card desktop-only">
+                        <!-- 
+                            NOTA: Imagen de la experiencia destacada
+                            Dimensiones: 400x250 px
+                            Formato: WEBP
+                            Alt: Retiro de Coraje (destacado)
+                        -->
+                        {% thumbnail "experiencias/imagenes/upcoming-3.webp" "400x250" crop="center" format="WEBP" quality=85 as up3 %}
+                            <img src="{{ up3.url }}" 
+                                 alt="Retiro de Coraje"
+                                 width="" 
+                                 height=""
+                                 loading="lazy"
+                                 class="upcoming-card__image">
+                        {% endthumbnail %}
+                        <div class="upcoming-card__body">
+                            <span class="upcoming-card__badge">💫 ¡Solo 15 plazas!</span>
+                            <h3 class="upcoming-card__title">Retiro de Coraje</h3>
+                            <p class="upcoming-card__date"><i class="far fa-calendar"></i> 2 - 3 Oct</p>
+                            <a href="#" class="btn btn--primary btn--small btn--full">Reservar ahora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upcoming__dots" id="upcomingDots"></div>
+        </div>
+    </section>
+
+
+    <!-- ============================================ -->
+    <!-- VOTA POR LA AVENTURA                         -->
+    <!-- ============================================ -->
+    <section class="community-vote" id="vote-aventura">
+        <div class="container">
+            <div class="community-vote__header">
+                <span class="section-tag">🗳️ Tú decides</span>
+                <h2 class="section-title">Vota por la aventura</h2>
+                <p class="section-subtitle">
+                    Lorena propone estas 3 nuevas experiencias. ¿Cuál quieres que se convierta en realidad?
+                </p>
+            </div>
+
+            <div class="community-vote__grid" id="voteGrid">
+                <!-- Aventura 1 -->
+                <div class="vote-card" data-id="1">
+                    <!-- 
+                        NOTA: Imagen de la aventura propuesta
+                        Dimensiones: 400x300 px
+                        Formato: WEBP
+                        Alt: Aventura en la montaña
+                    -->
+                    {% thumbnail "experiencias/imagenes/vote-mountain.webp" "400x300" crop="center" format="WEBP" quality=85 as v1 %}
+                        <img src="{{ v1.url }}" 
+                             alt="Aventura en la montaña"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="vote-card__image">
+                    {% endthumbnail %}
+                    <div class="vote-card__body">
+                        <h3 class="vote-card__title">🏔️ Expedición a la Montaña</h3>
+                        <p class="vote-card__description">
+                            Una aventura de 3 días explorando senderos escondidos, acampando bajo las estrellas 
+                            y conectando con la naturaleza en grupo.
+                        </p>
+                        <div class="vote-card__footer">
+                            <button class="btn btn--primary btn--small btn--vote" data-id="1">
+                                <i class="fas fa-thumbs-up"></i> Votar
+                            </button>
+                            <span class="vote-card__count" id="voteCount1">0 votos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aventura 2 -->
+                <div class="vote-card" data-id="2">
+                    <!-- 
+                        NOTA: Imagen de la aventura propuesta
+                        Dimensiones: 400x300 px
+                        Formato: WEBP
+                        Alt: Taller de arte urbano
+                    -->
+                    {% thumbnail "experiencias/imagenes/vote-urban-art.webp" "400x300" crop="center" format="WEBP" quality=85 as v2 %}
+                        <img src="{{ v2.url }}" 
+                             alt="Taller de arte urbano"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="vote-card__image">
+                    {% endthumbnail %}
+                    <div class="vote-card__body">
+                        <h3 class="vote-card__title">🎨 Taller de Arte Urbano</h3>
+                        <p class="vote-card__description">
+                            Aprende técnicas de graffiti y arte callejero con artistas locales. Un taller práctico 
+                            para expresar tu creatividad en las calles de la ciudad.
+                        </p>
+                        <div class="vote-card__footer">
+                            <button class="btn btn--primary btn--small btn--vote" data-id="2">
+                                <i class="fas fa-thumbs-up"></i> Votar
+                            </button>
+                            <span class="vote-card__count" id="voteCount2">0 votos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aventura 3 -->
+                <div class="vote-card" data-id="3">
+                    <!-- 
+                        NOTA: Imagen de la aventura propuesta
+                        Dimensiones: 400x300 px
+                        Formato: WEBP
+                        Alt: Noche de cocina internacional
+                    -->
+                    {% thumbnail "experiencias/imagenes/vote-cooking.webp" "400x300" crop="center" format="WEBP" quality=85 as v3 %}
+                        <img src="{{ v3.url }}" 
+                             alt="Noche de cocina internacional"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="vote-card__image">
+                    {% endthumbnail %}
+                    <div class="vote-card__body">
+                        <h3 class="vote-card__title">🍳 Noche de Cocina Internacional</h3>
+                        <p class="vote-card__description">
+                            Una velada para compartir recetas de diferentes culturas, cocinar en equipo y 
+                            disfrutar de una cena multicultural con nuevos amigos.
+                        </p>
+                        <div class="vote-card__footer">
+                            <button class="btn btn--primary btn--small btn--vote" data-id="3">
+                                <i class="fas fa-thumbs-up"></i> Votar
+                            </button>
+                            <span class="vote-card__count" id="voteCount3">0 votos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="community-vote__winner" id="voteWinner" style="display: none;">
+                <div class="winner-banner">
+                    <i class="fas fa-trophy"></i>
+                    <span>¡La aventura ganadora es: <strong id="winnerName">Expedición a la Montaña</strong>!</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ME LE APUNTO                                 -->
+    <!-- ============================================ -->
+    <section class="community-join" id="me-apunto">
+        <div class="container">
+            <div class="community-join__header">
+                <span class="section-tag">📋 ¿Te animas?</span>
+                <h2 class="section-title">Me le apunto</h2>
+                <p class="section-subtitle">
+                    Estas son las experiencias destacadas del mes. Da clic en "Me apunto" y confirma tu asistencia.
+                </p>
+            </div>
+
+            <div class="community-join__grid">
+                <!-- Experiencia 1 -->
+                <div class="join-card" data-id="join1">
+                    <!-- 
+                        NOTA: Imagen de la experiencia destacada
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Retiro de fin de semana
+                    -->
+                    {% thumbnail "experiencias/imagenes/join-retreat.webp" "300x200" crop="center" format="WEBP" quality=85 as j1 %}
+                        <img src="{{ j1.url }}" 
+                             alt="Retiro de fin de semana"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="join-card__image">
+                    {% endthumbnail %}
+                    <div class="join-card__body">
+                        <h3 class="join-card__title">Retiro de Fin de Semana</h3>
+                        <p class="join-card__details">
+                            <i class="far fa-calendar"></i> 5-6 de septiembre
+                        </p>
+                        <p class="join-card__details">
+                            <i class="fas fa-map-pin"></i> Bogotá
+                        </p>
+                        <div class="join-card__footer">
+                            <button class="btn btn--primary btn--small btn--join" data-id="join1">
+                                <i class="fas fa-check"></i> Me apunto
+                            </button>
+                            <span class="join-card__count" id="joinCount1">8 apuntados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiencia 2 -->
+                <div class="join-card" data-id="join2">
+                    <!-- 
+                        NOTA: Imagen de la experiencia destacada
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Taller de fotografía
+                    -->
+                    {% thumbnail "experiencias/imagenes/join-photography.webp" "300x200" crop="center" format="WEBP" quality=85 as j2 %}
+                        <img src="{{ j2.url }}" 
+                             alt="Taller de fotografía"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="join-card__image">
+                    {% endthumbnail %}
+                    <div class="join-card__body">
+                        <h3 class="join-card__title">Taller de Fotografía</h3>
+                        <p class="join-card__details">
+                            <i class="far fa-calendar"></i> 12 de septiembre
+                        </p>
+                        <p class="join-card__details">
+                            <i class="fas fa-map-pin"></i> Medellín
+                        </p>
+                        <div class="join-card__footer">
+                            <button class="btn btn--primary btn--small btn--join" data-id="join2">
+                                <i class="fas fa-check"></i> Me apunto
+                            </button>
+                            <span class="join-card__count" id="joinCount2">5 apuntados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiencia 3 -->
+                <div class="join-card tablet-only" data-id="join3">
+                    <!-- 
+                        NOTA: Imagen de la experiencia destacada
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Círculo de mujeres
+                    -->
+                    {% thumbnail "experiencias/imagenes/join-women-circle.webp" "300x200" crop="center" format="WEBP" quality=85 as j3 %}
+                        <img src="{{ j3.url }}" 
+                             alt="Círculo de mujeres"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="join-card__image">
+                    {% endthumbnail %}
+                    <div class="join-card__body">
+                        <h3 class="join-card__title">Círculo de Mujeres</h3>
+                        <p class="join-card__details">
+                            <i class="far fa-calendar"></i> 19 de septiembre
+                        </p>
+                        <p class="join-card__details">
+                            <i class="fas fa-map-pin"></i> Virtual
+                        </p>
+                        <div class="join-card__footer">
+                            <button class="btn btn--primary btn--small btn--join" data-id="join3">
+                                <i class="fas fa-check"></i> Me apunto
+                            </button>
+                            <span class="join-card__count" id="joinCount3">12 apuntados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiencia 4 (Solo desktop) -->
+                <div class="join-card desktop-only" data-id="join4">
+                    <!-- 
+                        NOTA: Imagen de la experiencia destacada
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Noche de juegos
+                    -->
+                    {% thumbnail "experiencias/imagenes/join-games.webp" "300x200" crop="center" format="WEBP" quality=85 as j4 %}
+                        <img src="{{ j4.url }}" 
+                             alt="Noche de juegos"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="join-card__image">
+                    {% endthumbnail %}
+                    <div class="join-card__body">
+                        <h3 class="join-card__title">Noche de Juegos</h3>
+                        <p class="join-card__details">
+                            <i class="far fa-calendar"></i> 26 de septiembre
+                        </p>
+                        <p class="join-card__details">
+                            <i class="fas fa-map-pin"></i> Medellín
+                        </p>
+                        <div class="join-card__footer">
+                            <button class="btn btn--primary btn--small btn--join" data-id="join4">
+                                <i class="fas fa-check"></i> Me apunto
+                            </button>
+                            <span class="join-card__count" id="joinCount4">3 apuntados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- EVENTO DEL MES (Like)                       -->
+    <!-- ============================================ -->
+    <section class="community-event-month" id="evento-mes">
+        <div class="container">
+            <div class="community-event-month__header">
+                <span class="section-tag">🏆 El favorito</span>
+                <h2 class="section-title">Evento del mes</h2>
+                <p class="section-subtitle">
+                    ¿Cuál fue tu experiencia favorita de este mes? Dale like a la que más te gustó.
+                </p>
+            </div>
+
+            <div class="community-event-month__grid">
+                <!-- Evento 1 -->
+                <div class="event-month-card" data-id="month1">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Taller de Creatividad
+                    -->
+                    {% thumbnail "experiencias/imagenes/month-creativity.webp" "300x200" crop="center" format="WEBP" quality=85 as m1 %}
+                        <img src="{{ m1.url }}" 
+                             alt="Taller de Creatividad"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-month-card__image">
+                    {% endthumbnail %}
+                    <div class="event-month-card__body">
+                        <h3 class="event-month-card__title">Taller de Creatividad</h3>
+                        <p class="event-month-card__details">
+                            <i class="far fa-calendar"></i> 15-17 de agosto
+                        </p>
+                        <button class="btn btn--secondary btn--small btn--like" data-id="month1">
+                            <i class="far fa-heart"></i> <span>Like</span>
+                        </button>
+                        <span class="event-month-card__count" id="monthCount1">24 likes</span>
+                    </div>
+                </div>
+
+                <!-- Evento 2 -->
+                <div class="event-month-card" data-id="month2">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Viaje de Exploración
+                    -->
+                    {% thumbnail "experiencias/imagenes/month-exploration.webp" "300x200" crop="center" format="WEBP" quality=85 as m2 %}
+                        <img src="{{ m2.url }}" 
+                             alt="Viaje de Exploración"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-month-card__image">
+                    {% endthumbnail %}
+                    <div class="event-month-card__body">
+                        <h3 class="event-month-card__title">Viaje de Exploración</h3>
+                        <p class="event-month-card__details">
+                            <i class="far fa-calendar"></i> 5-12 de septiembre
+                        </p>
+                        <button class="btn btn--secondary btn--small btn--like" data-id="month2">
+                            <i class="far fa-heart"></i> <span>Like</span>
+                        </button>
+                        <span class="event-month-card__count" id="monthCount2">31 likes</span>
+                    </div>
+                </div>
+
+                <!-- Evento 3 -->
+                <div class="event-month-card tablet-only" data-id="month3">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Retiro de Coraje
+                    -->
+                    {% thumbnail "experiencias/imagenes/month-courage.webp" "300x200" crop="center" format="WEBP" quality=85 as m3 %}
+                        <img src="{{ m3.url }}" 
+                             alt="Retiro de Coraje"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-month-card__image">
+                    {% endthumbnail %}
+                    <div class="event-month-card__body">
+                        <h3 class="event-month-card__title">Retiro de Coraje</h3>
+                        <p class="event-month-card__details">
+                            <i class="far fa-calendar"></i> 2-3 de octubre
+                        </p>
+                        <button class="btn btn--secondary btn--small btn--like" data-id="month3">
+                            <i class="far fa-heart"></i> <span>Like</span>
+                        </button>
+                        <span class="event-month-card__count" id="monthCount3">18 likes</span>
+                    </div>
+                </div>
+
+                <!-- Evento 4 (Solo desktop) -->
+                <div class="event-month-card desktop-only" data-id="month4">
+                    <!-- 
+                        NOTA: Imagen del evento
+                        Dimensiones: 300x200 px
+                        Formato: WEBP
+                        Alt: Charla Inspiradora
+                    -->
+                    {% thumbnail "experiencias/imagenes/month-talk.webp" "300x200" crop="center" format="WEBP" quality=85 as m4 %}
+                        <img src="{{ m4.url }}" 
+                             alt="Charla Inspiradora"
+                             width="" 
+                             height=""
+                             loading="lazy"
+                             class="event-month-card__image">
+                    {% endthumbnail %}
+                    <div class="event-month-card__body">
+                        <h3 class="event-month-card__title">Charla Inspiradora</h3>
+                        <p class="event-month-card__details">
+                            <i class="far fa-calendar"></i> 10 de octubre
+                        </p>
+                        <button class="btn btn--secondary btn--small btn--like" data-id="month4">
+                            <i class="far fa-heart"></i> <span>Like</span>
+                        </button>
+                        <span class="event-month-card__count" id="monthCount4">9 likes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================ -->
+    <!-- TESTIMONIOS                                 -->
+    <!-- ============================================ -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="testimonials__header">
+                <span class="section-tag">💬 La voz de la comunidad</span>
+                <h2 class="section-title">Lo que dicen nuestros aventureros</h2>
+            </div>
+
+            <div class="testimonials__slider" id="testimonialSlider">
+                <div class="testimonials__track" id="testimonialTrack">
+                    <!-- Testimonio 1 -->
+                    <div class="testimonial-card testimonial-card--slider">
+                        <div class="testimonial-card__stars">★★★★★</div>
+                        <p class="testimonial-card__text">
+                            "El taller de creatividad de Lorena fue un antes y un después en mi vida. 
+                            Finalmente empecé ese proyecto que había estado postergando por años."
+                        </p>
+                        <div class="testimonial-card__author">
+                            <!-- 
+                                NOTA: Foto de perfil
+                                Dimensiones: 60x60 px
+                                Formato: WEBP
+                                Alt: Carlos R.
+                            -->
+                            {% thumbnail "experiencias/imagenes/carlos-avatar.webp" "60x60" crop="center" format="WEBP" quality=85 as carlos %}
+                                <img src="{{ carlos.url }}" 
+                                     alt="Carlos R." 
+                                     width="" 
+                                     height=""
+                                     class="testimonial-card__avatar"
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <div>
+                                <span class="testimonial-card__name">Carlos R.</span>
+                                <span class="testimonial-card__role">Emprendedor creativo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 2 (Tablet+) -->
+                    <div class="testimonial-card testimonial-card--slider tablet-only">
+                        <div class="testimonial-card__stars">★★★★★</div>
+                        <p class="testimonial-card__text">
+                            "Lorena me ayudó a hacer mi primer viaje sola. Me dio la confianza que necesitaba. 
+                            Hoy he visitado 4 países sola."
+                        </p>
+                        <div class="testimonial-card__author">
+                            {% thumbnail "experiencias/imagenes/maria-avatar.webp" "60x60" crop="center" format="WEBP" quality=85 as maria %}
+                                <img src="{{ maria.url }}" 
+                                     alt="María C." 
+                                     width="" 
+                                     height=""
+                                     class="testimonial-card__avatar"
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <div>
+                                <span class="testimonial-card__name">María C.</span>
+                                <span class="testimonial-card__role">Viajera primeriza</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 3 (Desktop) -->
+                    <div class="testimonial-card testimonial-card--slider desktop-only">
+                        <div class="testimonial-card__stars">★★★★★</div>
+                        <p class="testimonial-card__text">
+                            "Lorena me ayudó a renunciar a mi trabajo corporativo y empezar mi propio negocio. 
+                            Esta comunidad es pura magia."
+                        </p>
+                        <div class="testimonial-card__author">
+                            {% thumbnail "experiencias/imagenes/laura-avatar.webp" "60x60" crop="center" format="WEBP" quality=85 as laura %}
+                                <img src="{{ laura.url }}" 
+                                     alt="Laura M." 
+                                     width="" 
+                                     height=""
+                                     class="testimonial-card__avatar"
+                                     loading="lazy">
+                            {% endthumbnail %}
+                            <div>
+                                <span class="testimonial-card__name">Laura M.</span>
+                                <span class="testimonial-card__role">Emprendedora</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="testimonial-btn testimonial-btn--prev" id="testimonialPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-btn testimonial-btn--next" id="testimonialNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="testimonials__dots" id="testimonialDots"></div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- MODAL DE DETALLE DE EXPERIENCIA            -->
+    <!-- ============================================ -->
+    <div class="modal" id="experienceModal">
+        <div class="modal__overlay" id="modalOverlay"></div>
+        <div class="modal__content">
+            <button class="modal__close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal__body">
+                <div class="modal__image">
+                    <!-- 
+                        NOTA: Imagen de la experiencia (grande)
+                        Dimensiones: 800x500 px
+                        Formato: WEBP
+                        Alt: Experiencia destacada
+                    -->
+                    {% thumbnail "experiencias/imagenes/experiencia-creatividad.webp" "800x500" crop="center" format="WEBP" quality=85 as modalImg %}
+                        <img src="{{ modalImg.url }}" 
+                             alt="Detalle de la experiencia"
+                             width="" 
+                             height=""
+                             id="modalImage"
+                             loading="lazy">
+                    {% endthumbnail %}
+                </div>
+                <div class="modal__info">
+                    <span class="modal__badge" id="modalBadge">🔥 Nuevo</span>
+                    <h2 class="modal__title" id="modalTitle">Taller de Creatividad</h2>
+                    <p class="modal__description" id="modalDescription">
+                        Desbloquea tu potencial creativo a través de ejercicios guiados y colaboración en grupo.
+                    </p>
+                    <div class="modal__meta" id="modalMeta">
+                        <span><i class="far fa-calendar"></i> 15 - 17 Ago</span>
+                        <span><i class="far fa-clock"></i> 3 días</span>
+                        <span><i class="fas fa-users"></i> 12 plazas disponibles</span>
+                    </div>
+                    <div class="modal__price" id="modalPrice">$297</div>
+                    <div class="modal__actions">
+                        <a href="#" class="btn btn--primary btn--pulse btn--full">Reservar ahora</a>
+                        <div class="modal__social">
+                            <span>Compartir:</span>
+                            <a href="#" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- NEWSLETTER / COMUNIDAD                      -->
+    <!-- ============================================ -->
+    <section class="newsletter" id="contact">
+        <div class="container">
+            <div class="newsletter__content">
+                <span class="section-tag">📬 No te pierdas ninguna aventura</span>
+                <h2 class="section-title">Únete a la comunidad</h2>
+                <p class="section-subtitle">
+                    Recibe el calendario mensual, ofertas exclusivas y anuncios de nuevas experiencias antes que nadie.
+                </p>
+                <form class="newsletter__form" id="newsletterForm">
+                    <div class="newsletter__field">
+                        <input type="email" id="newsletterEmail" placeholder="Tu mejor email" required>
+                        <button type="submit" class="btn btn--primary btn--pulse">
+                            <i class="fas fa-paper-plane"></i> Suscríbete
+                        </button>
+                    </div>
+                    <p class="newsletter__disclaimer">
+                        <i class="fas fa-gift"></i> Al suscribirte, recibirás un 10% de descuento en tu primera experiencia.
+                    </p>
+                    <div class="newsletter__success" id="newsletterSuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> ¡Bienvenida/o! Revisa tu email para el descuento.
+                    </div>
+                </form>
+                <div class="newsletter__community">
+                    <a href="#" class="btn btn--secondary">
+                        <i class="fas fa-users"></i> Unirme a la comunidad
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                      -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                    <p class="footer__tagline">Dare to begin. Together.</p>
+                    <div class="footer__social">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="{% url 'experiencias:experiencias' %}">Experiencias</a></li>
+                        <li><a href="{% url 'experiencias:comunidad' %}">Comunidad</a></li>
+                        <li><a href="{% url 'experiencias:home' %}">The Lore</a></li>
+                        <li><a href="{% url 'experiencias:sobre_mi' %}">Sobre mí</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos</a></li>
+                    </ul>
+                </div>
+                <div class="footer__badge">
+                    <div class="footer__community-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Orgullosa miembro del <strong>First Timer's Club</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Lorena Vásquez. Todos los derechos reservados. Hecho con ❤️ y valentía.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT                                  -->
+    <!-- ============================================ -->
+    <script>
+        // ==========================================
+        // MOBILE MENU TOGGLE
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ==========================================
+        // FILTROS Y BÚSQUEDA
+        // ==========================================
+        (function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('searchInput');
+            const cards = document.querySelectorAll('.experience-card');
+            const resultsCount = document.getElementById('resultsCount');
+            let currentFilter = 'all';
+            let currentSearch = '';
+
+            function filterCards() {
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const type = card.dataset.type;
+                    const title = card.dataset.title.toLowerCase();
+                    const matchesFilter = currentFilter === 'all' || type === currentFilter;
+                    const matchesSearch = title.includes(currentSearch.toLowerCase());
+
+                    if (matchesFilter && matchesSearch) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                resultsCount.textContent = visibleCount;
+            }
+
+            // Filtros
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(b => b.classList.remove('filter-btn--active'));
+                    this.classList.add('filter-btn--active');
+                    currentFilter = this.dataset.filter;
+                    filterCards();
+                });
+            });
+
+            // Búsqueda
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    currentSearch = this.value;
+                    filterCards();
+                });
+            }
+
+            // Inicializar
+            filterCards();
+        })();
+
+        // ==========================================
+        // CALENDARIO Y CARRUSEL SEMANAL
+        // ==========================================
+        (function() {
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const currentMonthDisplay = document.getElementById('currentMonth');
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const carouselTrack = document.getElementById('carouselTrack');
+            const carouselDots = document.getElementById('carouselDots');
+            const carouselPrev = document.getElementById('carouselPrev');
+            const carouselNext = document.getElementById('carouselNext');
+
+            if (!calendarGrid || !carouselTrack) return;
+
+            let currentMonth = new Date().getMonth();
+            let currentYear = new Date().getFullYear();
+            let currentWeekIndex = 0;
+            let weeksData = [];
+
+            // Datos de ejemplo para eventos (simulando experiencias)
+            const eventos = [
+                { date: 15, type: 'taller', title: 'Taller Creatividad' },
+                { date: 16, type: 'taller', title: 'Taller Creatividad' },
+                { date: 17, type: 'taller', title: 'Taller Creatividad' },
+                { date: 5, type: 'viaje', title: 'Viaje Exploración' },
+                { date: 6, type: 'viaje', title: 'Viaje Exploración' },
+                { date: 2, type: 'retiro', title: 'Retiro Coraje' },
+                { date: 3, type: 'retiro', title: 'Retiro Coraje' },
+                { date: 10, type: 'charla', title: 'Charla Inspiradora' },
+                { date: 15, type: 'virtual', title: 'Taller Virtual' },
+            ];
+
+            function getEventosPorDia(dia) {
+                return eventos.filter(e => e.date === dia);
+            }
+
+            function getTipoClase(tipo) {
+                const tipos = {
+                    'taller': 'calendar-day__event--taller',
+                    'retiro': 'calendar-day__event--retiro',
+                    'viaje': 'calendar-day__event--viaje',
+                    'charla': 'calendar-day__event--charla',
+                    'virtual': 'calendar-day__event--virtual'
+                };
+                return tipos[tipo] || '';
+            }
+
+            function generarCalendario(mes, año) {
+                const primerDia = new Date(año, mes, 1).getDay(); // 0 = domingo
+                const diasEnMes = new Date(año, mes + 1, 0).getDate();
+                const diasEnMesAnterior = new Date(año, mes, 0).getDate();
+
+                // Ajustar para que la semana empiece en lunes (1 = lunes)
+                let startOffset = primerDia === 0 ? 6 : primerDia - 1;
+
+                // Limpiar grid (mantener encabezados)
+                const weekdays = calendarGrid.querySelectorAll('.calendar-weekday');
+                calendarGrid.innerHTML = '';
+                weekdays.forEach(wd => calendarGrid.appendChild(wd));
+
+                // Días del mes anterior
+                for (let i = startOffset - 1; i >= 0; i--) {
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day calendar-day--empty';
+                    day.textContent = diasEnMesAnterior - i;
+                    calendarGrid.appendChild(day);
+                }
+
+                // Días del mes actual
+                for (let i = 1; i <= diasEnMes; i++) {
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day';
+                    day.innerHTML = `<span class="calendar-day__number">${i}</span>`;
+
+                    const eventosDia = getEventosPorDia(i);
+                    eventosDia.forEach(evento => {
+                        const eventSpan = document.createElement('div');
+                        eventSpan.className = `calendar-day__event ${getTipoClase(evento.type)}`;
+                        eventSpan.textContent = evento.title;
+                        day.appendChild(eventSpan);
+                    });
+
+                    calendarGrid.appendChild(day);
+                }
+
+                // Días del mes siguiente
+                const totalDiasMostrados = calendarGrid.children.length;
+                const diasFaltantes = 42 - totalDiasMostrados; // 6 filas de 7 días
+                for (let i = 1; i <= diasFaltantes; i++) {
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day calendar-day--empty';
+                    day.textContent = i;
+                    calendarGrid.appendChild(day);
+                }
+
+                // Generar semanas para el carrusel
+                generarSemanas(mes, año);
+            }
+
+            function generarSemanas(mes, año) {
+                const primerDia = new Date(año, mes, 1).getDay();
+                const diasEnMes = new Date(año, mes + 1, 0).getDate();
+                let startOffset = primerDia === 0 ? 6 : primerDia - 1;
+
+                weeksData = [];
+                let semana = [];
+                let diaActual = 1;
+
+                // Días vacíos al inicio
+                for (let i = 0; i < startOffset; i++) {
+                    semana.push(null);
+                }
+
+                // Días del mes
+                for (let i = 1; i <= diasEnMes; i++) {
+                    semana.push(i);
+                    if (semana.length === 7) {
+                        weeksData.push(semana);
+                        semana = [];
+                    }
+                }
+
+                // Días vacíos al final
+                while (semana.length < 7 && semana.length > 0) {
+                    semana.push(null);
+                }
+                if (semana.length > 0) {
+                    weeksData.push(semana);
+                }
+
+                currentWeekIndex = 0;
+                renderCarousel();
+            }
+
+            function renderCarousel() {
+                if (!carouselTrack) return;
+                carouselTrack.innerHTML = '';
+
+                weeksData.forEach((semana, idx) => {
+                    const weekDiv = document.createElement('div');
+                    weekDiv.className = 'carousel-week';
+                    weekDiv.dataset.index = idx;
+
+                    const title = document.createElement('p');
+                    title.className = 'carousel-week__title';
+                    title.textContent = `Semana ${idx + 1}`;
+                    weekDiv.appendChild(title);
+
+                    const daysGrid = document.createElement('div');
+                    daysGrid.className = 'carousel-week__days';
+
+                    semana.forEach(dia => {
+                        const dayDiv = document.createElement('div');
+                        dayDiv.className = 'carousel-day';
+                        if (dia === null) {
+                            dayDiv.style.visibility = 'hidden';
+                            daysGrid.appendChild(dayDiv);
+                            return;
+                        }
+
+                        const numSpan = document.createElement('span');
+                        numSpan.className = 'carousel-day__number';
+                        numSpan.textContent = dia;
+                        dayDiv.appendChild(numSpan);
+
+                        const eventosDia = getEventosPorDia(dia);
+                        eventosDia.forEach(evento => {
+                            const eventSpan = document.createElement('div');
+                            eventSpan.className = `carousel-day__event ${getTipoClase(evento.type)}`;
+                            eventSpan.textContent = evento.title;
+                            dayDiv.appendChild(eventSpan);
+                        });
+
+                        daysGrid.appendChild(dayDiv);
+                    });
+
+                    weekDiv.appendChild(daysGrid);
+                    carouselTrack.appendChild(weekDiv);
+                });
+
+                // Dots
+                if (carouselDots) {
+                    carouselDots.innerHTML = '';
+                    weeksData.forEach((_, idx) => {
+                        const dot = document.createElement('button');
+                        dot.className = `carousel-dot${idx === currentWeekIndex ? ' carousel-dot--active' : ''}`;
+                        dot.dataset.index = idx;
+                        dot.addEventListener('click', () => {
+                            currentWeekIndex = idx;
+                            updateCarousel();
+                        });
+                        carouselDots.appendChild(dot);
+                    });
+                }
+
+                updateCarousel();
+            }
+
+            function updateCarousel() {
+                if (!carouselTrack) return;
+                const offset = -currentWeekIndex * 100;
+                carouselTrack.style.transform = `translateX(${offset}%)`;
+
+                const dots = carouselDots?.querySelectorAll('.carousel-dot');
+                dots?.forEach((dot, idx) => {
+                    dot.classList.toggle('carousel-dot--active', idx === currentWeekIndex);
+                });
+            }
+
+            if (carouselPrev) {
+                carouselPrev.addEventListener('click', () => {
+                    if (currentWeekIndex > 0) {
+                        currentWeekIndex--;
+                        updateCarousel();
+                    }
+                });
+            }
+
+            if (carouselNext) {
+                carouselNext.addEventListener('click', () => {
+                    if (currentWeekIndex < weeksData.length - 1) {
+                        currentWeekIndex++;
+                        updateCarousel();
+                    }
+                });
+            }
+
+            function actualizarMes() {
+                if (currentMonthDisplay) {
+                    currentMonthDisplay.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                }
+                generarCalendario(currentMonth, currentYear);
+            }
+
+            if (prevMonthBtn) {
+                prevMonthBtn.addEventListener('click', () => {
+                    currentMonth--;
+                    if (currentMonth < 0) {
+                        currentMonth = 11;
+                        currentYear--;
+                    }
+                    actualizarMes();
+                });
+            }
+
+            if (nextMonthBtn) {
+                nextMonthBtn.addEventListener('click', () => {
+                    currentMonth++;
+                    if (currentMonth > 11) {
+                        currentMonth = 0;
+                        currentYear++;
+                    }
+                    actualizarMes();
+                });
+            }
+
+            actualizarMes();
+
+            // Alternar vista (grid/calendar)
+            const viewButtons = document.querySelectorAll('.view-btn');
+            const calendarView = document.getElementById('calendarView');
+            const calendarCarousel = document.getElementById('calendarCarousel');
+
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    viewButtons.forEach(b => b.classList.remove('view-btn--active'));
+                    this.classList.add('view-btn--active');
+
+                    const view = this.dataset.view;
+                    if (view === 'grid') {
+                        if (calendarView) calendarView.style.display = 'none';
+                        if (calendarCarousel) calendarCarousel.style.display = 'none';
+                        document.getElementById('experiences-grid').scrollIntoView({ behavior: 'smooth' });
+                    } else if (view === 'calendar') {
+                        if (calendarView) calendarView.style.display = 'block';
+                        if (calendarCarousel) calendarCarousel.style.display = 'block';
+                        document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Inicializar vista
+            if (calendarView) calendarView.style.display = 'none';
+            if (calendarCarousel) calendarCarousel.style.display = 'none';
+        })();
+
+        // ==========================================
+        // MODAL DE DETALLE DE EXPERIENCIA
+        // ==========================================
+        (function() {
+            const modal = document.getElementById('experienceModal');
+            const overlay = document.getElementById('modalOverlay');
+            const closeBtn = document.getElementById('modalClose');
+            const detailBtns = document.querySelectorAll('.btn--detail');
+
+            // Datos de ejemplo para el modal
+            const experienceData = {
+                1: {
+                    title: 'Taller de Creatividad',
+                    badge: '🔥 Nuevo',
+                    description: 'Desbloquea tu potencial creativo a través de ejercicios guiados y colaboración en grupo. Un espacio para explorar, experimentar y conectar con tu lado más creativo.',
+                    meta: '15 - 17 Ago · 3 días · 12 plazas disponibles',
+                    price: '$297',
+                    image: 'experiencia-creatividad.webp'
+                },
+                2: {
+                    title: 'Viaje de Exploración',
+                    badge: '🌍 Bestseller',
+                    description: 'Supera el miedo a viajar solo con un grupo de apoyo y la guía de Lorena. Descubre nuevos lugares y conéctate con otros aventureros.',
+                    meta: '5 - 12 Sep · 7 días · 8 plazas disponibles',
+                    price: '$1,197',
+                    image: 'experiencia-viaje.webp'
+                },
+                3: {
+                    title: 'Retiro de Coraje',
+                    badge: '💫 Últimas plazas',
+                    description: 'Enfrenta tus miedos y construye el valor para perseguir tus sueños más audaces. Un retiro transformador en un entorno de apoyo.',
+                    meta: '2 - 3 Oct · 2 días · 15 plazas disponibles',
+                    price: '$197',
+                    image: 'experiencia-retiro.webp'
+                },
+                4: {
+                    title: 'Charla Inspiradora',
+                    badge: '🎙️ Nueva',
+                    description: 'Una charla íntima sobre el poder de las "primeras veces" y cómo empezar tu propia aventura. Inspiración en estado puro.',
+                    meta: '10 Oct · 2 horas · 30 plazas disponibles',
+                    price: '$47',
+                    image: 'experiencia-charla.webp'
+                },
+                5: {
+                    title: 'Taller Virtual',
+                    badge: '💻 Online',
+                    description: 'Aprende a dar tu primer paso desde la comodidad de tu hogar, con el apoyo de la comunidad. Accesible desde cualquier lugar.',
+                    meta: '15 Oct · 3 horas · 20 plazas disponibles',
+                    price: '$97',
+                    image: 'experiencia-virtual.webp'
+                }
+            };
+
+            function openModal(id) {
+                const data = experienceData[id];
+                if (!data) return;
+
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalBadge').textContent = data.badge;
+                document.getElementById('modalDescription').textContent = data.description;
+                document.getElementById('modalMeta').innerHTML = `
+                    <span><i class="far fa-calendar"></i> ${data.meta.split('·')[0].trim()}</span>
+                    <span><i class="far fa-clock"></i> ${data.meta.split('·')[1].trim()}</span>
+                    <span><i class="fas fa-users"></i> ${data.meta.split('·')[2].trim()}</span>
+                `;
+                document.getElementById('modalPrice').textContent = data.price;
+
+                // Actualizar imagen
+                const img = document.getElementById('modalImage');
+                const basePath = '/media/experiencias/imagenes/';
+                img.src = basePath + data.image;
+                img.alt = data.title;
+
+                modal.classList.add('modal--active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('modal--active');
+                document.body.style.overflow = '';
+            }
+
+            detailBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.experience;
+                    openModal(id);
+                });
+            });
+
+            if (overlay) overlay.addEventListener('click', closeModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+            // Cerrar con Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+        })();
+
+        // ==========================================
+        // TESTIMONIALS SLIDER
+        // ==========================================
+        (function() {
+            const track = document.getElementById('testimonialTrack');
+            const prevBtn = document.getElementById('testimonialPrev');
+            const nextBtn = document.getElementById('testimonialNext');
+            const dotsContainer = document.getElementById('testimonialDots');
+
+            if (!track || !prevBtn || !nextBtn) return;
+
+            const cards = track.querySelectorAll('.testimonial-card--slider');
+            const total = cards.length;
+            let currentIndex = 0;
+
+            // Crear dots
+            if (dotsContainer) {
+                cards.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = `testimonial-dot${i === 0 ? ' testimonial-dot--active' : ''}`;
+                    dot.dataset.index = i;
+                    dot.addEventListener('click', () => {
+                        currentIndex = i;
+                        updateSlider();
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            function updateSlider() {
+                const offset = -currentIndex * 100;
+                track.style.transform = `translateX(${offset}%)`;
+
+                const dots = dotsContainer?.querySelectorAll('.testimonial-dot');
+                dots?.forEach((dot, i) => {
+                    dot.classList.toggle('testimonial-dot--active', i === currentIndex);
+                });
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = currentIndex > 0 ? currentIndex - 1 : total - 1;
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = currentIndex < total - 1 ? currentIndex + 1 : 0;
+                updateSlider();
+            });
+
+            // Inicializar
+            updateSlider();
+        })();
+
+        // ==========================================
+        // NEWSLETTER FORM
+        // ==========================================
+        (function() {
+            const form = document.getElementById('newsletterForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = document.getElementById('newsletterEmail');
+                const success = document.getElementById('newsletterSuccess');
+
+                if (!input.value) {
+                    alert('Por favor, ingresa tu email.');
+                    return;
+                }
+
+                success.style.display = 'block';
+                input.value = '';
+                setTimeout(() => {
+                    success.style.display = 'none';
+                }, 5000);
+            });
+        })();
+
+        // ==========================================
+        // LOAD MORE BUTTON
+        // ==========================================
+        (function() {
+            const loadBtn = document.getElementById('loadMoreBtn');
+            if (!loadBtn) return;
+
+            let hiddenCards = document.querySelectorAll('.experience-card.desktop-only, .experience-card.tablet-only');
+
+            loadBtn.addEventListener('click', function() {
+                let loaded = 0;
+                hiddenCards.forEach(card => {
+                    if (card.style.display !== 'flex') {
+                        card.style.display = 'flex';
+                        loaded++;
+                    }
+                });
+
+                if (loaded === 0) {
+                    this.textContent = 'No hay más experiencias';
+                    this.disabled = true;
+                    this.style.opacity = '0.5';
+                } else {
+                    const count = document.getElementById('resultsCount');
+                    if (count) {
+                        const current = parseInt(count.textContent) || 0;
+                        count.textContent = current + loaded;
+                    }
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

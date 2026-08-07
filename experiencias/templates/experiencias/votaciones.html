@@ -1,0 +1,480 @@
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votaciones — Lorena Vásquez</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'experiencias/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'experiencias/lore_favicon.ico' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'experiencias/lore_favicon.svg' %}">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- HEADER / NAVIGATION                          -->
+    <!-- ============================================ -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <a href="{% url 'experiencias:home' %}">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                </a>
+            </div>
+            
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav__menu" id="navMenu">
+                <li><a href="{% url 'experiencias:experiencias' %}" class="nav__link">Experiencias</a></li>
+                <li><a href="{% url 'experiencias:comunidad' %}" class="nav__link">Comunidad</a></li>
+                <li><a href="{% url 'experiencias:home' %}#lore" class="nav__link">The Lore</a></li>
+                <li><a href="{% url 'experiencias:sobre_mi' %}" class="nav__link">Sobre Mí</a></li>
+                <li><a href="{% url 'experiencias:aventureros' %}" class="nav__link">Aventureros</a></li>
+                <li><a href="{% url 'experiencias:votaciones' %}" class="nav__link nav__link--active">Votaciones</a></li>
+                <li><a href="{% url 'experiencias:home' %}#contact" class="nav__link nav__link--cta">Únete a la Aventura</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- GRID DE CATEGORÍAS (VOTACIÓN)               -->
+    <!-- ============================================ -->
+    <section class="votaciones-categories" id="categorias">
+        <div class="container">
+            <div class="votaciones-categories__header">
+                <span class="section-tag">🗳️ Participa</span>
+                <h2 class="section-title">Vota por tu aventurero favorito</h2>
+                <p class="section-subtitle">
+                    Elige a los mejores en cada categoría. ¡Cada voto cuenta!
+                </p>
+            </div>
+
+            <div class="votaciones-categories__grid">
+                {% for categoria in categorias %}
+                    <div class="category-card {% if categoria.id in votos_usuario %}voted{% endif %}" 
+                        data-category="{{ categoria.id }}">
+                        <div class="category-card__icon">{{ categoria.icono }}</div>
+                        <h3 class="category-card__title">{{ categoria.nombre }}</h3>
+                        <p class="category-card__description">{{ categoria.descripcion }}</p>
+                        
+                        {% if categoria.id in votos_usuario %}
+                            {# El usuario ya votó en esta categoría #}
+                            <button class="btn btn--teal btn--small" disabled>
+                                <i class="fas fa-check"></i> Votaste
+                            </button>
+                            <span class="category-card__status">
+                                ✅ {{ votos_usuario|get_item:categoria.id }}
+                            </span>
+                        {% else %}
+                            {# El usuario aún no ha votado #}
+                            <button class="btn btn--primary btn--small btn--vote-category" 
+                                    data-modal="modal-{{ categoria.id }}">
+                                <i class="fas fa-thumbs-up"></i> Votar aquí
+                            </button>
+                        {% endif %}
+                        
+                        <span class="category-card__count" id="count-{{ categoria.id }}">
+                            {{ categoria.total_votos }} votos
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Botón de volver -->
+            <div class="votaciones-categories__back">
+                <a href="{% url 'adventurers' %}" class="btn btn--secondary btn--outline">
+                    <i class="fas fa-arrow-left"></i> Volver a Aventureros
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- MODALES DE VOTACIÓN (Uno por categoría)     -->
+    <!-- ============================================ -->
+    {% for categoria in categorias %}
+        <div class="votaciones-modal" id="modal-{{ categoria.id }}">
+            <div class="votaciones-modal__overlay" data-close="modal-{{ categoria.id }}"></div>
+            <div class="votaciones-modal__content">
+                <button class="votaciones-modal__close" data-close="modal-{{ categoria.id }}">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div class="votaciones-modal__header">
+                    <span class="votaciones-modal__badge">{{ categoria.icono }}</span>
+                    <h2 class="votaciones-modal__title">
+                        Vota por: <span class="highlight">{{ categoria.nombre|upper }}</span>
+                    </h2>
+                    <p class="votaciones-modal__subtitle">
+                        Elige a tu favorito para esta categoría.
+                    </p>
+                </div>
+
+                <!-- Grid de candidatos -->
+                <div class="votaciones-modal__grid">
+                    {% with candidatos=candidatos_por_categoria|get_item:categoria.id %}
+                        {% for candidato in candidatos %}
+                            <div class="candidate-card" data-candidate="{{ candidato.id }}">
+                                <div class="candidate-card__image">
+                                    {% if candidato.foto %}
+                                        <img src="{{ candidato.foto.url }}" 
+                                            alt="@{{ candidato.username }}"
+                                            width="100" 
+                                            height="100"
+                                            loading="lazy">
+                                    {% else %}
+                                        <div class="candidate-card__placeholder">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {% if forloop.first %}
+                                        <span class="candidate-card__badge">🏆 Líder</span>
+                                    {% endif %}
+                                </div>
+                                <div class="candidate-card__body">
+                                    <h4 class="candidate-card__name">@{{ candidato.username }}</h4>
+                                    <p class="candidate-card__location">
+                                        <i class="fas fa-map-pin"></i> {{ candidato.ciudad|default:"Sin ubicación" }}
+                                    </p>
+                                    <p class="candidate-card__votes">
+                                        <i class="fas fa-thumbs-up"></i> {{ candidato.votos_recibidos }} votos
+                                    </p>
+                                    
+                                    {% if categoria.id in votos_usuario %}
+                                        {# Si ya votó, mostrar deshabilitado #}
+                                        <button class="btn btn--secondary btn--small" disabled>
+                                            <i class="fas fa-check"></i> Votaste
+                                        </button>
+                                    {% else %}
+                                        <button class="btn btn--secondary btn--small btn--select-candidate" 
+                                                data-candidate="{{ candidato.id }}"
+                                                data-category="{{ categoria.id }}">
+                                            <i class="far fa-circle"></i> Elegir
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p class="no-candidates">No hay candidatos disponibles para esta categoría.</p>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+
+                <!-- Confirmar voto -->
+                <div class="votaciones-modal__confirm">
+                    {% if categoria.id in votos_usuario %}
+                        <p class="votaciones-modal__hint">
+                            ✅ Ya votaste en esta categoría.
+                        </p>
+                    {% else %}
+                        <button class="btn btn--primary btn--pulse btn--full btn--confirm-vote" 
+                                data-category="{{ categoria.id }}" 
+                                data-form-url="{% url 'votar' %}" 
+                                disabled>
+                            <i class="fas fa-check"></i> Confirmar voto
+                        </button>
+                        <p class="votaciones-modal__hint" id="hint-{{ categoria.id }}">
+                            Selecciona un candidato para confirmar tu voto.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                      -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="logo-symbol">✦</span>
+                    <span class="logo-text">Lorena Vásquez</span>
+                    <p class="footer__tagline">Dare to begin. Together.</p>
+                    <div class="footer__social">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="{% url 'experiencias:experiencias' %}">Experiencias</a></li>
+                        <li><a href="{% url 'experiencias:comunidad' %}">Comunidad</a></li>
+                        <li><a href="{% url 'experiencias:home' %}">The Lore</a></li>
+                        <li><a href="{% url 'experiencias:sobre_mi' %}">Sobre mí</a></li>
+                        <li><a href="{% url 'experiencias:aventureros' %}">Aventureros</a></li>
+                        <li><a href="{% url 'experiencias:votaciones' %}">Votaciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos</a></li>
+                    </ul>
+                </div>
+                <div class="footer__badge">
+                    <div class="footer__community-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Orgullosa miembro del <strong>First Timer's Club</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Lorena Vásquez. Todos los derechos reservados. Hecho con ❤️ y valentía.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT                                  -->
+    <!-- ============================================ -->
+    <script>
+        // ==========================================
+        // MOBILE MENU TOGGLE
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ==========================================
+        // ABRIR / CERRAR MODALES (JavaScript mínimo)
+        // ==========================================
+        (function() {
+            // Abrir modal al hacer clic en "Votar aquí"
+            document.querySelectorAll('.btn--vote-category').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modalId = this.dataset.modal;
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            // Cerrar modal (botón X y overlay)
+            document.querySelectorAll('[data-close]').forEach(el => {
+                el.addEventListener('click', function() {
+                    const modalId = this.dataset.close;
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        
+                        // Resetear selección al cerrar
+                        const selectedCards = modal.querySelectorAll('.candidate-card.selected');
+                        selectedCards.forEach(card => card.classList.remove('selected'));
+                        
+                        const selectedBtns = modal.querySelectorAll('.btn--select-candidate.selected');
+                        selectedBtns.forEach(btn => {
+                            btn.classList.remove('selected');
+                            btn.innerHTML = '<i class="far fa-circle"></i> Elegir';
+                        });
+                        
+                        const confirmBtn = modal.querySelector('.btn--confirm-vote');
+                        if (confirmBtn) {
+                            confirmBtn.disabled = true;
+                        }
+                    }
+                });
+            });
+
+            // Cerrar con tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.votaciones-modal.active').forEach(modal => {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                }
+            });
+
+            // ==========================================
+            // SELECCIONAR CANDIDATO
+            // ==========================================
+            document.querySelectorAll('.btn--select-candidate').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Si ya está seleccionado, deseleccionar
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        this.innerHTML = '<i class="far fa-circle"></i> Elegir';
+                        const card = this.closest('.candidate-card');
+                        if (card) card.classList.remove('selected');
+                        
+                        const modal = this.closest('.votaciones-modal');
+                        const confirmBtn = modal?.querySelector('.btn--confirm-vote');
+                        if (confirmBtn) {
+                            confirmBtn.disabled = true;
+                        }
+                        return;
+                    }
+
+                    const modal = this.closest('.votaciones-modal');
+                    const categoryId = this.dataset.category;
+                    
+                    // Deseleccionar otros en el mismo modal
+                    modal.querySelectorAll('.btn--select-candidate').forEach(b => {
+                        b.classList.remove('selected');
+                        b.innerHTML = '<i class="far fa-circle"></i> Elegir';
+                    });
+                    
+                    modal.querySelectorAll('.candidate-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    
+                    // Seleccionar este
+                    this.classList.add('selected');
+                    this.innerHTML = '<i class="fas fa-check-circle"></i> Elegido';
+                    
+                    const card = this.closest('.candidate-card');
+                    if (card) card.classList.add('selected');
+                    
+                    // Habilitar confirmar
+                    const confirmBtn = modal.querySelector('.btn--confirm-vote');
+                    if (confirmBtn) {
+                        confirmBtn.disabled = false;
+                        confirmBtn.dataset.candidate = this.dataset.candidate;
+                    }
+                    
+                    // Actualizar hint
+                    const hint = modal.querySelector('.votaciones-modal__hint');
+                    if (hint) {
+                        const candidateName = this.closest('.candidate-card')?.querySelector('.candidate-card__name')?.textContent || '';
+                        hint.textContent = `Votaste por ${candidateName}. Confirma tu voto.`;
+                    }
+                });
+            });
+
+            // ==========================================
+            // CONFIRMAR VOTO
+            // ==========================================
+            document.querySelectorAll('.btn--confirm-vote').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    
+                    const modal = this.closest('.votaciones-modal');
+                    const categoryId = this.dataset.category;
+                    const candidateId = this.dataset.candidate;
+                    const categoryName = modal?.querySelector('.votaciones-modal__title')?.textContent || 'esta categoría';
+                    
+                    // Obtener el nombre del candidato
+                    const candidateCard = modal?.querySelector(`.candidate-card[data-candidate="${candidateId}"]`);
+                    const candidateName = candidateCard?.querySelector('.candidate-card__name')?.textContent || 'candidato';
+                    
+                    // En producción: enviar voto vía AJAX o formulario
+                    // Por ahora, simulamos éxito
+                    const successMessage = `✅ ¡Votaste por ${candidateName} como el ${categoryName.trim()}!`;
+                    
+                    // Mostrar toast
+                    showToast(successMessage);
+                    
+                    // Cerrar modal
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    
+                    // Actualizar la tarjeta de categoría (opcional, con AJAX sería mejor)
+                    const categoryCard = document.querySelector(`.category-card[data-category="${categoryId}"]`);
+                    if (categoryCard) {
+                        const countSpan = categoryCard.querySelector('.category-card__count');
+                        if (countSpan) {
+                            const currentCount = parseInt(countSpan.textContent) || 0;
+                            countSpan.textContent = `${currentCount + 1} votos`;
+                        }
+                        
+                        // Marcar como votado
+                        categoryCard.classList.add('voted');
+                        const voteBtn = categoryCard.querySelector('.btn--vote-category');
+                        if (voteBtn) {
+                            voteBtn.innerHTML = '<i class="fas fa-check"></i> Votaste';
+                            voteBtn.disabled = true;
+                            voteBtn.classList.remove('btn--primary');
+                            voteBtn.classList.add('btn--teal');
+                        }
+                    }
+                });
+            });
+
+            // ==========================================
+            // FUNCIÓN PARA MOSTRAR TOAST
+            // ==========================================
+            function showToast(message) {
+                // Eliminar toast anterior
+                const oldToast = document.querySelector('.toast-message');
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement('div');
+                toast.className = 'toast-message';
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-charcoal);
+                    color: var(--color-white);
+                    padding: 14px 28px;
+                    border-radius: var(--radius-full);
+                    font-family: var(--font-body);
+                    font-size: 1rem;
+                    z-index: 9999;
+                    box-shadow: var(--shadow-lg);
+                    animation: fadeInUp 0.3s ease;
+                    max-width: 90%;
+                    text-align: center;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 4000);
+            }
+
+            // Añadir estilo para animación del toast
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translate(-50%, 20px); }
+                    to { opacity: 1; transform: translate(-50%, 0); }
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+    </script>
+
+</body>
+</html>

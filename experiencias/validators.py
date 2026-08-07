@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 
+### VARIABLES DE LAS FOTOS ###
+
 # Las dimensiones minimas y maximas de las fotos
 foto_ancho_min, foto_alto_min, foto_ancho_max, foto_alto_max = 1600, 900, 4096, 4096
 dimensiones_max = (foto_ancho_max,foto_alto_max) #(width, height)
@@ -14,6 +16,12 @@ peso_maximo = num_peso_max * 1024 * 1024 # El num_peso_max ens MB in bytes
 # peso_maximo_if_ok es el peso para redimensionar la imagen si se pasa de esto, pero quality 75%
 peso_minimo_if_ok = 500 * 1024 # 500 KB
 peso_maximo_if_ok = 1.5 * 1024 * 1024
+
+
+### VARIABLES DEL PRECIO ###
+precio_maximo = 5000000
+
+
 
 def validar_tamaño_archivo(valor):
     if valor.size > peso_maximo:
@@ -35,3 +43,8 @@ def validar_min_dimension(valor):
         raise ValidationError(f'El ancho de la imagen esta bien pero esta muy baja. El minimo es {foto_alto_min} y la imagen tiene {valor.height}')
     elif valor.width < foto_ancho_min:
         raise ValidationError(f'El alto de la imagen esta bien pero esta muy angosta. El minimo es {foto_ancho_min} y la imagen tiene {valor.width}')
+
+def validar_precio_maximo(valor):
+    """Verifica que el precio de una experiencia no supere cierto limite"""
+    if valor > precio_maximo:
+        raise ValidationError(f'El valor de un plan no puede estar por encima de {precio_maximo}')
